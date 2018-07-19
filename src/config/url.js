@@ -1,3 +1,5 @@
-export const SERVER_BASE = "http://localhost:8999/api/";
+export const SERVER_BASE = "/api/";
+export const SERVER_ADMIN = "/api/admin/";
 
 export const TEST = "test";
+export const LOGIN = "login";

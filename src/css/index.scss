@@ -1,5 +1,50 @@
 $main-color: #ff4f4f;
+$minor-color: #333333;
+$line-color: #eeeeee;
 
-div {
-    color: $main-color;
-} 
+$justify-config: (flex-start, center, flex-end, space-between, space-around);
+$align-config: (flex-start, center, flex-end, stretch, baseline);
+$wrap-config: (wrap, nowrap);
+$flex-direction: (row, column);
+
+.flex {
+    display: flex;
+    display: -webkit-flex;
+}
+
+@mixin prefix($property, $value) {
+    -webkit-#{$property}: $value;
+    #{$property}: $value;
+}
+
+%hr {
+    background-color: $line-color;
+    height: 1px;
+    border: none;
+}
+
+@each $justify in $justify-config {
+    .justify-#{$justify} {
+        @include prefix(justify-content, $justify);
+    }
+}
+@each $align in $align-config {
+    .align-#{$align} {
+        @include prefix(align-items, $align);
+    }
+}
+@each $wrap in $wrap-config {
+    .flex-#{$wrap} {
+        @include prefix(flex-wrap, $wrap);
+    }
+}
+
+@each $rc in $flex-direction {
+    .flex-#{$rc} {
+        @include prefix(flex-direction, $rc);
+    }
+}
+
+p {
+    margin-bottom: 0;
+}

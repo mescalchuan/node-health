@@ -32,11 +32,22 @@ var htmlPluginArr = [new HtmlWebpackPlugin({
     xhtml: true,
     showErrors: true,
     minify: false
+}), new HtmlWebpackPlugin({
+    //htmlPlugin的filename的参考路径是output的path
+    filename: '../build/admin.html',
+    template: './admin.html',
+    chunks: ['vendor', 'admin'],
+    inject: true,
+    chunksSortMode: 'manual',
+    xhtml: true,
+    showErrors: true,
+    minify: false
 })]
 
 var entry = {
     //vendor: [],
-    'index': './src/index.js'
+    'index': './src/index.js',
+    'admin': './src/admin.js'
 };
 
 //最基本的webpack配置

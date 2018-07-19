@@ -1,9 +1,7 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
 import * as server from "../server/homeServer";
-//用于绑定所有action到属性中
 import {bindActionCreators} from 'redux';
-//用于将react和redux连接到一起
 import {connect} from 'react-redux';
 import { Carousel } from "antd";
 import "../css/index.scss";

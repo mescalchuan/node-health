@@ -1,0 +1,26 @@
+@import "./index.scss";
+.login {
+    background-color: $main-color;
+    height: 100vh;
+    .login-con {
+        width: 500px;
+        background-color: white;
+        padding: 50px;
+        text-align: center;
+        @include prefix(border-radius, 10px);
+        p {
+            font-size: 25px;
+            color: #333333;
+            font-weight: bold;
+        }
+        input {
+            height: 35px;
+            margin-top: 30px;
+        }
+        button {
+            width: 100%;
+            height: 40;
+            margin-top: 30px;
+        }
+    }
+}
