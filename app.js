@@ -10,22 +10,6 @@ app.use((req, res, next) => {
 
 app.use('/api', router.foodRouter);
 
-app.get('/', (req, res) => {
-    // mongodb.MongoClient.connect("mongodb://localhost/db",function(err, db){
-    //     if(!err){
-    //         var dbase = db.db("runoob");
-    //         dbase.createCollection('site', function (err, res) {
-    //             if (err) throw err;
-    //             console.log("创建集合!");
-    //             db.close();
-    //         });
-    //     }
-    //     else {
-    //         console.log(err);
-    //     }
-    // })
-})
-
 mongoose.connect("mongodb://localhost/db", function(err, db) {
     if(err) {
         console.log("连接失败");
