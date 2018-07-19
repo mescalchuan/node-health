@@ -14,7 +14,7 @@ export default {
         let newData = data;
         let newUrl = url;
         
-        if (newData) newData = ajax.exchangeParmaster(data);
+        if (newData) newData = this.exchangeParmaster(data);
         else newData = null;
 
         if (newUrl.indexOf("?") >= 0) {
@@ -70,7 +70,7 @@ export default {
     posts(url, data, successCallback, failCallback, needJSON) {
         const request = new XMLHttpRequest();
         let newData = null;
-        if (data) newData = ajax.exchangeParmaster(data);
+        if (data) newData = this.exchangeParmaster(data);
         
         else newData = null;
         request.onreadystatechange = function(e) {

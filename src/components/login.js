@@ -25,7 +25,10 @@ class Login extends Component {
             userName,
             password
         })
-        this.props.actions.login();
+        this.props.actions.login({
+            userName,
+            password
+        });
     }
     render() {
         return (
