@@ -3,17 +3,13 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as server from "../../server/adminServer";
 import {getData, postData} from "../../common/fetch";
+import { Avatar } from 'antd';
+import "../../css/admin.scss";
 
 class AdminCenter extends Component {
     constructor(props) {
         super(props);
         
-    }
-    get() {
-        getData("/api/admin/123");
-    }
-    post() {
-        postData("/api/admin/456", {token: userInfo.token});
     }
     logout() {
         this.props.actions.logout({token: userInfo.token}, () => {
@@ -24,12 +20,16 @@ class AdminCenter extends Component {
     }
     render() {
         return (
-            <div>
-               登录成功
-               <span>{userInfo.token}</span>
-               <button onClick={() => this.get()}>get</button>
-               <button onClick={() => this.post()}>post</button>   
-               <button onClick={() => this.logout()}>注销</button>
+            <div className = "center" >
+                <div className = "header flex justify-space-between align-center" >
+                    <h2>Node Health</h2>
+                    <div className = "flex align-center">
+                        <Avatar size="large" icon="user" />
+                        <span>Admin</span>
+                        <a href="javascript:void" onClick = {() => this.logout()} >注销</a>
+                    </div>
+                </div>
+                
             </div>
         )
     }
