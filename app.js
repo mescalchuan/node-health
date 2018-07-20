@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
 const session = require("express-session");
 const router = require("./router/index");
-const interceptorCtrl = require("./controller/interceptorCtrl");
+const interceptor = require("./controller/interceptorCtrl");
 const app = express();
 
 app.use(cookieParser());
@@ -32,7 +32,7 @@ app.set("views", __dirname);
 app.set("view engine", "ejs");
 
 app.use((req, res, next) => {
-    interceptorCtrl.interceptor(req, res, next);
+    interceptor(req, res, next);
 })
 
 app.use('/api', router.foodRouter);

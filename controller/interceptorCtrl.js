@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const interceptor = (req, res, next) => {
+const interceptor = module.exports = (req, res, next) => {
     let url = req.path;
     if(!!(~url.indexOf(".html"))) {
         url = url.replace(/\//g, "");
@@ -49,8 +49,4 @@ const interceptor = (req, res, next) => {
         })
     }
     next();
-}
-
-module.exports = {
-    interceptor
 }
