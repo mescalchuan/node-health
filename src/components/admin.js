@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
-import Login from "./login";
+import Login from "./admin/login";
+import AdminCenter from "./admin/center";
 import "../css/admin.scss";
 
 export default class Admin extends Component {
@@ -13,7 +14,7 @@ export default class Admin extends Component {
     render() {
         return (
             <div>
-               <Login/>
+               {userInfo.hasLogin ? <AdminCenter/> : <Login/>}
             </div>
         )
     }

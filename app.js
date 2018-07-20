@@ -2,18 +2,44 @@ const express = require("express");
 const mongoose = require("mongoose");
 const webpack = require("webpack");
 const webpackConfig = require("./webpack.config");
-const bodyParser = require('body-parser')
+const cookieParser = require("cookie-parser");
+const bodyParser = require('body-parser');
+const session = require("express-session");
+const router = require("./router/index");
+const interceptorCtrl = require("./controller/interceptorCtrl");
 const app = express();
 
-const router = require("./router/index");
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}));
+
+// const compiler = webpack(webpackConfig, (err, status) => {
+//     if(err) {
+//         console.log(err);
+//     }
+// })
+//  app.use(require("webpack-dev-middleware")(compiler, webpackConfig.devServer));
+// app.use(require("webpack-hot-middleware")(compiler));
+
+//设置存放模板文件的目录
+app.set("views", __dirname);
+//设置模板引擎为ejs
+app.set("view engine", "ejs");
+
 app.use((req, res, next) => {
-    // res.header("Access-Control-Allow-Origin", "*");
-    next();
+    interceptorCtrl.interceptor(req, res, next);
 })
 
 app.use('/api', router.foodRouter);
 app.use('/api/admin', router.adminRouter);
-app.use(bodyParser());
+
+app.use(express.static('src'));
+app.use(express.static(__dirname));
 
 mongoose.connect("mongodb://localhost/db", function(err, db) {
     if(err) {
@@ -24,17 +50,6 @@ mongoose.connect("mongodb://localhost/db", function(err, db) {
     }
 })
 
-const compiler = webpack(webpackConfig, (err, status) => {
-    if(err) {
-        console.log(err);
-    }
-})
-
-app.use(require("webpack-dev-middleware")(compiler, webpackConfig.devServer));
-app.use(require("webpack-hot-middleware")(compiler));
-app.use(express.static('src'));
-app.use(express.static(__dirname));
-
-app.listen(webpackConfig.devServer.port, () => {
+app.listen("8888", () => {
     console.log("server created!");
 })
