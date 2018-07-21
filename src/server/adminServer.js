@@ -14,9 +14,9 @@ export function login(params, successBK, errorBK) {
     }
 }
 
-export function logout(params, successBK, errorBK) {
+export function logout(successBK, errorBK) {
     return (dispatch, getState) => {
-        return postData(url.SERVER_ADMIN + url.LOGOUT, params).then(res => {
+        return postData(url.SERVER_ADMIN + url.LOGOUT).then(res => {
             if(res.retCode == 0) {
                 successBK && successBK();
             }

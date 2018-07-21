@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
-import * as server from "../server/homeServer";
+import * as server from "../server/userServer";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { Carousel } from "antd";

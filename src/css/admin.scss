@@ -17,4 +17,16 @@
             margin-left: 10px;
         }
     }
+    .body {
+        width: 1000px;
+        margin: 50px auto;
+        .ant-input-group-wrapper {
+            width: 400px;
+        }    
+        table {
+            td, th {
+                text-align: center;
+            }
+        }
+    }
 }

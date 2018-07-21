@@ -91,20 +91,20 @@ var webpackConfig = {
         new ExtractTextPlugin('[name].bundle.css', {
             allChunks: false
         }),
-        new UglifyJsPlugin({
-            minimize: true,
-            output: {
-                comments: false,
-                beautify: false
-            },
-            compress: {
-                warnings: false,
-                drop_console: true,
-                collapse_vars: true,
-                reduce_vars: true
-            }
-        }),
-        new OptimizeCSSPlugin()
+        // new UglifyJsPlugin({
+        //     minimize: true,
+        //     output: {
+        //         comments: false,
+        //         beautify: false
+        //     },
+        //     compress: {
+        //         warnings: false,
+        //         drop_console: true,
+        //         collapse_vars: true,
+        //         reduce_vars: true
+        //     }
+        // }),
+        //new OptimizeCSSPlugin()
     ]
 };
 

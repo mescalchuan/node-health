@@ -1,0 +1,48 @@
+@import "./index.scss";
+
+.food-con {
+    .food-title {
+        img {
+            width: 50px;
+            height: 50px;
+            @include prefix(border-radius, 50px);
+        }
+        .food-name, .kcal {
+            color: #333333;  
+        }
+        .food-name {
+            font-size: 15px;
+        }
+        .kcal {
+            font-size: 16px;
+        }
+    }
+    .basic {
+        margin-top: 20px;
+    }
+    table {
+        border: 0 !important;
+        th {
+            font-size: 13px;
+            text-align: center;
+            padding: 10px;
+            background-color: transparent;
+        }
+        th:nth-last-child(1), td:nth-last-child(1) {
+            border-right: 0;
+        }
+        td {
+            font-size: 13px;
+            text-align: center;
+            border-bottom: 0;
+            padding: 5px;
+        }
+    }
+    .nutrient-first {
+        table {
+            td {
+                border-bottom: 1px solid #e8e8e8;
+            }
+        }
+    }
+}

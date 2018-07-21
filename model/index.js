@@ -35,20 +35,24 @@ const foodSchema = Schema({
     P: Number,
     NA: Number,
     SE: Number,
-    //0绿 1黄 2红
+    //1红 2黄 3绿
     rate: Number,
     remark: String,
     categoryId: {
         type: Schema.Types.ObjectId,
         ref: "category"
     }
+}, {
+    collection: "food"
 })
-
-const category = Schema({
+//collection指定数据库的哪一张表，否则mongoose会默认添加s后缀的表名
+const categorySchema = Schema({
     name: String
+}, {
+    collection: "category"
 })
 
 module.exports = {
     Food: mongoose.model("food", foodSchema),
-    Category: mongoose.model("category", category)
+    Category: mongoose.model("category", categorySchema)
 }

@@ -2,21 +2,88 @@ import React, { Component } from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as server from "../../server/adminServer";
+import * as userServer from "../../server/userServer";
 import {getData, postData} from "../../common/fetch";
-import { Avatar } from 'antd';
+import { Avatar, Input, Select, Button, Table, Modal } from 'antd';
+import FoodCard from "../foodCard";
 import "../../css/admin.scss";
+
+const Option = Select.Option;
 
 class AdminCenter extends Component {
     constructor(props) {
         super(props);
-        
+        this.columns = [{
+            title: "名字",
+            dataIndex: "name",
+            key: "name"
+        }, {
+            title: "热量(千卡/100克)",
+            dataIndex: "kcal",
+            key: "kcal"
+        }, {
+            title: "蛋白质(克)",
+            dataIndex: "protein",
+            key: "protein"
+        }, {
+            title: "脂肪(克)",
+            dataIndex: "fat",
+            key: "fat"
+        }, {
+            title: "碳水化合物(克)",
+            dataIndex: "carbohydrate",
+            key: "carbohydrate"
+        }, {
+            title: "膳食纤维(克)",
+            dataIndex: "DF",
+            key: "DF"
+        }, {
+            title: '操作',
+            key: 'action',
+            render: (text, record) => (
+                <div className = "flex justify-space-around" >
+                    <Button onClick = {() => this.changeCardVisible(record.key)}>详情</Button>
+                    <Button>编辑</Button>
+                    <Button>删除</Button>
+                </div>
+            ),
+        }]
+        this.state = {
+            cardVisible: false,
+            currentIndex: 0,
+            searchInfo: {
+                categoryId: ""
+            }
+        }
     }
     logout() {
-        this.props.actions.logout({token: userInfo.token}, () => {
+        this.props.actions.logout(() => {
             window.location.reload();
         }, res => {
             alert(res.retMsg);
         })
+    }
+    componentDidMount() {
+        this.props.userActions.getCategory();
+        this.props.userActions.searchFoods();
+    }
+    renderCategory() {
+        return this.props.category.map((item, index) => {
+            return <Option value = {item._id} key = {index} >{item.name}</Option>
+        })
+    }
+    selectCategory(value) {
+        let _searchInfo = JSON.parse(JSON.stringify(this.state.searchInfo));
+        _searchInfo.categoryId = value;
+        this.setState({
+            searchInfo: _searchInfo
+        })
+    }
+    changeCardVisible(currentIndex) {
+        this.setState({
+            cardVisible: !this.state.cardVisible,
+            currentIndex
+        });
     }
     render() {
         return (
@@ -30,6 +97,27 @@ class AdminCenter extends Component {
                     </div>
                 </div>
                 
+                <div className = "body" >
+                    <div className = "search-con" >
+                        <Input addonBefore="食物名" placeholder = "请输入食物名" />
+                        <Select value = {this.state.searchInfo.categoryId} style={{ width: 120 }} onChange={value => {this.selectCategory(value)}} >
+                            <Option value="">食物分类</Option>
+                            {this.renderCategory()}
+                        </Select>
+                        <Button type="primary" icon="search">Search</Button>
+                    </div>
+
+                    <div className = "lists" >
+                        <Table dataSource = {this.props.foods} columns = {this.columns} bordered />
+                    </div>
+
+                    <Button>添加</Button>
+                    {
+                        this.props.foods.length ? <Modal title = "食物详情" visible = {this.state.cardVisible} footer = {null} onCancel = {() => this.changeCardVisible(this.state.currentIndex)} >
+                            <FoodCard food = {this.props.foods[this.state.currentIndex]} />
+                        </Modal> : null
+                    }
+                </div>
             </div>
         )
     }
@@ -38,11 +126,13 @@ class AdminCenter extends Component {
 
 // 将actions绑定到props上
 const mapDispatchToProps = (dispatch) => ({
-	actions: bindActionCreators(server, dispatch)
+    actions: bindActionCreators(server, dispatch),
+    userActions: bindActionCreators(userServer, dispatch)
 });
 
 const mapStateToProps = (state) => ({
-	
+    category: state.adminReducer.category,
+    foods: state.adminReducer.foods
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminCenter);

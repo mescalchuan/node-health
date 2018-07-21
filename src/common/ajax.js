@@ -13,17 +13,17 @@ export default {
         const request = new XMLHttpRequest();
         let newData = data;
         let newUrl = url;
-        
-        if (newData) newData = this.exchangeParmaster(data);
+        if(userInfo.token) {
+            newData ? (newData.token = userInfo.token) : (newData = {token: userInfo.token}); 
+        }
+        if (newData) newData = this.exchangeParmaster(newData);
         else newData = null;
-
         if (newUrl.indexOf("?") >= 0) {
             if (newData)  newUrl += "&" + newData;
         } 
         else {
             if (newData) newUrl += "?" + newData;
         }
-
         request.onreadystatechange = e => {
             if (request.readyState !== 4) return;
 
@@ -69,8 +69,11 @@ export default {
 
     posts(url, data, successCallback, failCallback, needJSON) {
         const request = new XMLHttpRequest();
-        let newData = null;
-        if (data) newData = this.exchangeParmaster(data);
+        let newData = data;
+        if(userInfo.token) {
+            newData ? (newData.token = userInfo.token) : (newData = {token: userInfo.token}); 
+        }
+        if (newData) newData = this.exchangeParmaster(newData);
         
         else newData = null;
         request.onreadystatechange = function(e) {
