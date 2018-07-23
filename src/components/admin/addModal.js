@@ -109,26 +109,68 @@ export default class AddModal extends Component {
         //读取文件
         reader.readAsDataURL(file);
     }
-    submit() {
-        if(!this.state.name) {
-            message.warning("请输入食物名");
-            return;
+    validateForm() {
+        let flag = true;
+        for(let key in nutrition) {
+            if(!this.state[key] && this.state[key] !== 0) {
+                flag = false;
+            }
         }
-        if(!this.state.rate) {
-            message.warning("请选择健康等级");
+        return flag;
+    }
+    submit() {
+        // if(!this.state.name) {
+        //     message.warning("请输入食物名");
+        //     return;
+        // }
+        // if(!this.state.rate) {
+        //     message.warning("请选择健康等级");
+        //     return;
+        // }
+        if(!this.state.file) {
+            message.warning("请上传图片");
             return;
         }
         if(!this.state.categoryId) {
             message.warning("请选择食物分类");
             return;
         }
+        if(!this.validateForm()) {
+            message.warning("请补全表单");
+            return;
+        }
         let formData = new FormData();
-        console.log(this.state.file)
         formData.append("imgUrl", this.state.file);
         formData.append("name", this.state.name);
         formData.append("token", userInfo.token);
-        console.log(formData);
-        this.props.actions.addFood(formData);
+        formData.append("kcal", this.state.kcal);
+        formData.append("protein", this.state.protein);
+        formData.append("fat", this.state.fat);
+        formData.append("carbohydrate", this.state.carbohydrate);
+        formData.append("DF", this.state.DF);
+        formData.append("VA", this.state.VA);
+        formData.append("VC", this.state.VC);
+        formData.append("VE", this.state.VE);
+        formData.append("carotene", this.state.carotene);
+        formData.append("VB1", this.state.VB1);
+        formData.append("VB2", this.state.VB2);
+        formData.append("niacin", this.state.niacin);
+        formData.append("cholesterol", this.state.cholesterol);
+        formData.append("MG", this.state.MG);
+        formData.append("CA", this.state.CA);
+        formData.append("FE", this.state.FE);
+        formData.append("ZN", this.state.ZN);
+        formData.append("CU", this.state.CU);
+        formData.append("MN", this.state.MN);
+        formData.append("K", this.state.K);
+        formData.append("P", this.state.P);
+        formData.append("NA", this.state.NA);
+        formData.append("SE", this.state.SE);
+        formData.append("rate", this.state.rate);
+        formData.append("remark", this.state.remark);
+        this.props.actions.addFood(formData, () => {
+            window.location.reload();
+        });
     }
     render() {
         const food = {}
