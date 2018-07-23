@@ -26,3 +26,16 @@ export function logout(successBK, errorBK) {
         })
     }
 }
+
+export function addFood(params, successBK, errorBK) {
+    return (dispatch, getState) => {
+        return postData(url.SERVER_ADMIN + url.ADD_FOOD, params).then(res => {
+            if(res.retCode == 0) {
+                successBK && successBK();
+            }
+            else {
+                errorBK && errorBK(res);
+            }
+        })
+    }
+}

@@ -6,9 +6,14 @@ import * as userServer from "../../server/userServer";
 import {getData, postData} from "../../common/fetch";
 import { Avatar, Input, Select, Button, Table, Modal } from 'antd';
 import FoodCard from "../foodCard";
+import AddModal from "../admin/addModal";
 import "../../css/admin.scss";
 
 const Option = Select.Option;
+const type = {
+    ADD: "ADD",
+    EDIT: "EDIT"
+}
 
 class AdminCenter extends Component {
     constructor(props) {
@@ -50,10 +55,12 @@ class AdminCenter extends Component {
         }]
         this.state = {
             cardVisible: false,
+            addVisvile: false,
             currentIndex: 0,
             searchInfo: {
                 categoryId: ""
-            }
+            },
+            currentType: type.ADD
         }
     }
     logout() {
@@ -85,6 +92,11 @@ class AdminCenter extends Component {
             currentIndex
         });
     }
+    changeAddVisible() {
+        this.setState({
+            addVisible: !this.state.addVisible
+        })
+    }
     render() {
         return (
             <div className = "center" >
@@ -111,12 +123,15 @@ class AdminCenter extends Component {
                         <Table dataSource = {this.props.foods} columns = {this.columns} bordered />
                     </div>
 
-                    <Button>添加</Button>
+                    <Button onClick = {() => this.setState({currentType: type.ADD, addVisible: true})} >添加</Button>
                     {
                         this.props.foods.length ? <Modal title = "食物详情" visible = {this.state.cardVisible} footer = {null} onCancel = {() => this.changeCardVisible(this.state.currentIndex)} >
                             <FoodCard food = {this.props.foods[this.state.currentIndex]} />
                         </Modal> : null
                     }
+                    <Modal title = {this.state.currentType == type.ADD ? "添加" : "修改"} visible = {this.state.addVisible} footer = {null} onCancel = {() => this.changeAddVisible()} >
+                        <AddModal category = {this.props.category} actions = {this.props.actions} />
+                    </Modal>
                 </div>
             </div>
         )

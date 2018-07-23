@@ -6,3 +6,9 @@ import * as types from "./actionType";
 //         category
 //     }
 // }
+
+export function addFood() {
+    return {
+        type: types.ADD_FOOD
+    }
+}

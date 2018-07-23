@@ -70,11 +70,20 @@ export default {
     posts(url, data, successCallback, failCallback, needJSON) {
         const request = new XMLHttpRequest();
         let newData = data;
-        if(userInfo.token) {
+        if(!!(~url.indexOf("admin/add")) || !!(~url.indexOf("admin/edit"))) {
+            
+        }
+        else if(userInfo.token) {
             newData ? (newData.token = userInfo.token) : (newData = {token: userInfo.token}); 
         }
-        if (newData) newData = this.exchangeParmaster(newData);
-        
+        if(newData) {
+            if(!!(~url.indexOf("admin/add")) || !!(~url.indexOf("admin/edit"))) {
+
+            }
+            else {
+                newData = this.exchangeParmaster(newData);
+            }
+        }
         else newData = null;
         request.onreadystatechange = function(e) {
             if (request.readyState !== 4) return;
@@ -113,8 +122,11 @@ export default {
             request.setRequestHeader("Content-Type", "application/json");
             newData = JSON.stringify(data);
         }
-        else {
+        else if(!!!(~url.indexOf("admin/add")) && !!!(~url.indexOf("admin/edit"))) {
             request.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+        }
+        else {
+           // request.setRequestHeader("Content-Type", "multipart/form-data");
         }
         request.send(newData);
     }

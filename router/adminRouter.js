@@ -10,4 +10,8 @@ router.post("/logout", (req, res) => {
     adminCtrl.logout(req, res);
 })
 
+router.post("/addFood", (req, res) => {
+    adminCtrl.addFood(req, res);
+})
+
 module.exports = router;

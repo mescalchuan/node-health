@@ -22,8 +22,9 @@ const interceptor = module.exports = (req, res, next) => {
                 hasLogin: false
             })
         }
+        next();
     }
-    else if(!!(~url.indexOf("/api/admin")) && !!!(~url.indexOf("/login"))) {
+    else if(!!(~url.indexOf("/api/admin")) && !!!(~url.indexOf("/login")) && !!!(~url.indexOf("/addFood"))) {
         let token = "";
         if(JSON.stringify(req.body) === "{}") {
             token = req.query.token;
@@ -39,6 +40,9 @@ const interceptor = module.exports = (req, res, next) => {
                         retMsg: "csrf"
                     })
                 }
+                else {
+                    next();
+                }
             }
             else {
                 return res.json({
@@ -48,5 +52,7 @@ const interceptor = module.exports = (req, res, next) => {
             }
         })
     }
-    next();
+    else {
+        next();
+    }
 }
