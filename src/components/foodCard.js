@@ -1,15 +1,7 @@
 import React, {Component} from 'react';
 import { Divider, Rate, Table } from 'antd';
-import {nutrientDisplay} from "../common/utils";
+import { nutrientDisplay, getRateColor } from "../common/utils";
 import "../css/food.scss";
-
-const getRateColor = (rate) => {
-    switch(rate) {
-        case 3: return "#53cd0f";
-        case 2: return "#fabd14";
-        case 1: return "red"
-    }
-}
 
 const columns1 = [{
     title: "维生素A",

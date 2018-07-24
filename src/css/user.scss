@@ -1,0 +1,46 @@
+@import "./index.scss";
+
+.user {
+    .ant-carousel .slick-slide {
+        text-align: center;
+        height: 400px;
+        overflow: hidden;
+        h3 {
+            color: #fff;
+        }
+        .banner {
+            width: 100%;
+            height: 400px;
+            background: url(../img/banner.jpg);
+            background-size: cover;
+            position: relative;
+            h1 {
+                color: white;
+                line-height: 400px;
+                text-align: center;
+            }
+            .search-con {
+                width: 400px;
+                background-color: white;
+                position: absolute;
+                bottom: 70px;
+                left: 50%;
+                @include prefix(transform, translateX(-50%));
+            }
+        }
+    }
+    
+    .body {
+        padding: 0 30px;
+        .ant-divider {
+            margin: 32px 0;
+            font-size: 20px;
+        }
+        .star-list, category-recommon {
+            @include prefix(flex-shrink, 0);
+        }
+        .category-recommon {
+            margin-top: -32px;
+        }
+    }
+}
