@@ -1,6 +1,5 @@
 @import "./index.scss";
 .login {
-    background-color: $main-color;
     height: 100vh;
     .login-img {
         background: url(../img/bk.jpg);
@@ -24,6 +23,15 @@
             width: 100%;
             height: 40;
             margin-top: 30px;
+            border-color: $main-color;
+            color: $main-color;
+        }
+        button:hover {
+            background-color: $main-color;
+            color: white;
+        }
+        input:hover {
+            border-color: $main-color;
         }
     }
 }

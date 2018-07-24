@@ -105,8 +105,8 @@ export default ({food}) => {
             </div>
             <div className = "basic flex justify-space-around" >
                 <p style = {{width:"33.33%"}} >膳食纤维：{nutrientDisplay(food.DF)} 克</p>
-                <p style = {{width:"33.33%"}} >烟酸：{nutrientDisplay(food.niacin)} 克</p>
-                <p style = {{width:"33.33%"}} >胆固醇：{nutrientDisplay(food.cholesterol)} 克</p>
+                <p style = {{width:"33.33%"}} >烟酸：{nutrientDisplay(food.niacin)} 毫克</p>
+                <p style = {{width:"33.33%"}} >胆固醇：{nutrientDisplay(food.cholesterol)} 毫克</p>
             </div>
             <Divider>维生素 / 100mg</Divider>
             <Table dataSource = {[food]} columns = {columns1} bordered pagination = {false} />

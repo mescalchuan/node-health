@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { store } from "./store";
 import { Provider } from "react-redux";
-import Home from "./components/home";
+import User from "./components/user";
 
 const App = () => {
     return (
         <Provider store = {store} >
-            <Home/>
+            <User/>
         </Provider>
     )
 }

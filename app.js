@@ -42,6 +42,13 @@ app.use('/api/admin', router.adminRouter);
 
 app.use(express.static('src'));
 app.use(express.static(__dirname));
+app.get("/", (req, res) => {
+    return res.render("index", {
+        userName: "",
+        token: "",
+        hasLogin: false
+    })
+})
 
 mongoose.connect("mongodb://localhost/db", function(err, db) {
     if(err) {

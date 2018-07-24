@@ -149,6 +149,10 @@ export default class AddModal extends Component {
             message.warning("请补全表单");
             return;
         }
+        if(!this.state.rate) {
+            message.warning("请选择健康等级");
+            return;
+        }
         let formData = new FormData();
         formData.append("imgUrl", this.state.file);
         formData.append("categoryId", this.state.categoryId);
@@ -202,7 +206,7 @@ export default class AddModal extends Component {
         !this.props.isAdd && this.setState({
             imgHasSelected: true
         }, () => {
-            this.refs.avatar.src = this.state.imgUrl
+            this.refs.avatar.src = this.state.imgUrl;
         })
     }
     render() {
@@ -246,8 +250,8 @@ export default class AddModal extends Component {
                 </div>
                 <div className = "basic flex justify-space-around" >
                     <div style = {{width:"33.33%"}} >膳食纤维：<InputNumber min = {0} className = "small-input" size = "small" value = {this.state.DF} onChange = {e => this.changeValue(e, nutrition.DF)} /> 克</div>
-                    <div style = {{width:"33.33%"}} >烟酸：<InputNumber min = {0} className = "small-input" size = "small" value = {this.state.niacin} onChange = {e => this.changeValue(e, nutrition.niacin)} /> 克</div>
-                    <div style = {{width:"33.33%"}} >胆固醇：<InputNumber min = {0} className = "small-input" size = "small" value = {this.state.cholesterol} onChange = {e => this.changeValue(e, nutrition.cholesterol)} /> 克</div>
+                    <div style = {{width:"33.33%"}} >烟酸：<InputNumber min = {0} className = "small-input" size = "small" value = {this.state.niacin} onChange = {e => this.changeValue(e, nutrition.niacin)} /> 毫克</div>
+                    <div style = {{width:"33.33%"}} >胆固醇：<InputNumber min = {0} className = "small-input" size = "small" value = {this.state.cholesterol} onChange = {e => this.changeValue(e, nutrition.cholesterol)} /> 毫克</div>
                 </div>
                 <Divider>维生素 / 100mg</Divider>
                     <Row>
