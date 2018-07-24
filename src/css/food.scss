@@ -8,13 +8,21 @@
             @include prefix(border-radius, 50px);
         }
         .food-name, .kcal {
-            color: #333333;  
+            color: $minor-color;  
         }
         .food-name {
             font-size: 15px;
         }
         .kcal {
             font-size: 16px;
+        }
+        .categoryName {
+            font-size: 15px;
+            color: minor-color;
+            text-align: center;
+        }
+        .ant-divider {
+            margin: 10px 0;
         }
     }
     .basic {

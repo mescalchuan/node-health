@@ -4,12 +4,13 @@ import {connect} from 'react-redux';
 import * as server from "../../server/adminServer";
 import * as userServer from "../../server/userServer";
 import {getData, postData} from "../../common/fetch";
-import { Avatar, Input, Select, Button, Table, Modal } from 'antd';
+import { Avatar, Input, Select, Button, Table, Modal, Icon } from 'antd';
 import FoodCard from "../foodCard";
 import AddModal from "../admin/addModal";
 import "../../css/admin.scss";
 
 const Option = Select.Option;
+const confirm = Modal.confirm;
 const type = {
     ADD: "ADD",
     EDIT: "EDIT"
@@ -47,9 +48,9 @@ class AdminCenter extends Component {
             key: 'action',
             render: (text, record) => (
                 <div className = "flex justify-space-around" >
-                    <Button onClick = {() => this.changeCardVisible(record.key)}>详情</Button>
-                    <Button>编辑</Button>
-                    <Button>删除</Button>
+                    <Button onClick = {() => this.changeCardVisible(record.key)} shape = "circle" icon = "eye-o" />
+                    <Button onClick = {() => this.setState({currentType: type.EDIT, currentIndex: record.key, addVisible: true})} type = "danger" shape = "circle" icon = "edit" />
+                    <Button onClick = {() => this.showDeleteConfirm(record.key)} type = "danger" shape = "circle" icon = "delete" />
                 </div>
             ),
         }]
@@ -58,6 +59,7 @@ class AdminCenter extends Component {
             addVisvile: false,
             currentIndex: 0,
             searchInfo: {
+                keyword: "",
                 categoryId: ""
             },
             currentType: type.ADD
@@ -72,7 +74,7 @@ class AdminCenter extends Component {
     }
     componentDidMount() {
         this.props.userActions.getCategory();
-        this.props.userActions.searchFoods();
+        this.searchFoods();
     }
     renderCategory() {
         return this.props.category.map((item, index) => {
@@ -92,45 +94,79 @@ class AdminCenter extends Component {
             currentIndex
         });
     }
+    deleteFood(currentIndex) {
+        const foodId = this.props.foods[currentIndex]._id;
+        this.props.actions.deleteFood(foodId, () => {
+            window.location.reload();
+        });
+    }
     changeAddVisible() {
         this.setState({
             addVisible: !this.state.addVisible
         })
     }
+    showDeleteConfirm(currentIndex) {
+        const self = this;
+        confirm({
+            title: '警告',
+            content: '确定删除该食物吗？',
+            okText: '是',
+            okType: 'danger',
+            cancelText: '取消',
+            onOk() {
+                self.deleteFood(currentIndex)
+            },
+            onCancel() {
+
+            },
+        });
+    }
+    searchFoods() {
+        const {keyword, categoryId} = this.state.searchInfo;
+        this.props.userActions.searchFoods({keyword, categoryId});
+    }
     render() {
+        const isAdd = this.state.currentType == type.ADD;
+        const food = this.props.foods[this.state.currentIndex];
         return (
             <div className = "center" >
                 <div className = "header flex justify-space-between align-center" >
                     <h2>Node Health</h2>
                     <div className = "flex align-center">
-                        <Avatar size="large" icon="user" />
+                        <Avatar icon="user" />
                         <span>Admin</span>
                         <a href="javascript:void" onClick = {() => this.logout()} >注销</a>
                     </div>
                 </div>
                 
                 <div className = "body" >
-                    <div className = "search-con" >
-                        <Input addonBefore="食物名" placeholder = "请输入食物名" />
+                    <h2>Node Health 后台管理系统</h2>
+                    <div className = "search-con flex justify-center" >
+                        <Input 
+                            addonBefore="食物名" 
+                            placeholder = "请输入食物名" 
+                            value = {this.state.searchInfo.keyword} 
+                            onChange = {e => this.setState({searchInfo: Object.assign({}, this.state.searchInfo, {keyword: e.target.value})})} 
+                        />
                         <Select value = {this.state.searchInfo.categoryId} style={{ width: 120 }} onChange={value => {this.selectCategory(value)}} >
                             <Option value="">食物分类</Option>
                             {this.renderCategory()}
                         </Select>
-                        <Button type="primary" icon="search">Search</Button>
+                        <Button type="primary" icon="search" onClick = {() => this.searchFoods()} >搜索</Button>
                     </div>
 
                     <div className = "lists" >
-                        <Table dataSource = {this.props.foods} columns = {this.columns} bordered />
+                        <Table dataSource = {this.props.foods} columns = {this.columns} bordered pagination = {false} />
                     </div>
 
                     <Button onClick = {() => this.setState({currentType: type.ADD, addVisible: true})} >添加</Button>
                     {
                         this.props.foods.length ? <Modal title = "食物详情" visible = {this.state.cardVisible} footer = {null} onCancel = {() => this.changeCardVisible(this.state.currentIndex)} >
-                            <FoodCard food = {this.props.foods[this.state.currentIndex]} />
+                            <FoodCard food = {food} />
                         </Modal> : null
                     }
-                    <Modal title = {this.state.currentType == type.ADD ? "添加" : "修改"} visible = {this.state.addVisible} footer = {null} onCancel = {() => this.changeAddVisible()} >
-                        <AddModal category = {this.props.category} actions = {this.props.actions} />
+                    <Modal title = {isAdd ? "添加" : "修改"} visible = {this.state.addVisible} footer = {null} onCancel = {() => this.changeAddVisible()} destroyOnClose >
+                        <AddModal category = {this.props.category} actions = {this.props.actions} isAdd = {isAdd} food = {isAdd ? {} : food} />
                     </Modal>
                 </div>
             </div>

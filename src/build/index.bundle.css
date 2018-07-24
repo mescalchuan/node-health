@@ -60,6 +60,10 @@
 
 p, h1, h2 {
   margin: 0; }
+
+.flex-1 {
+  -webkit-flex: 1;
+  flex: 1; }
 .ant-carousel .slick-slide {
   text-align: center;
   height: 160px;

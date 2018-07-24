@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Upload, Icon, message, Rate, Divider, Table, Input, Row, Col, InputNumber, Button, Select } from 'antd';
+import { Icon, message, Rate, Divider, Table, Input, Row, Col, InputNumber, Button, Select } from 'antd';
+import {clone} from "../../common/utils";
 import "../../css/add.scss";
 
 const { TextArea } = Input;
@@ -62,10 +63,11 @@ export default class AddModal extends Component {
             P: null,
             NA: null,
             SE: null,
-            rate: 1,
+            rate: 0,
             remark: "",
             imgHasSelected: false,
-            file: null
+            file: null,
+            imgUrl: null
         }
     }
     renderCategory() {
@@ -79,7 +81,7 @@ export default class AddModal extends Component {
         })
     }
     changeValue(e, type) {
-        const value = e ? e.target ? e.target.value : e : null ;
+        const value = e || e == 0 ? e.target ? e.target.value : e : null ;
         this.setState({
             [type]: value
         })
@@ -87,27 +89,43 @@ export default class AddModal extends Component {
     selectImg() {
         const fileEle = this.refs.file;
         const file = fileEle.files[0];
-        const reader = new FileReader();
-        //创建文件读取相关的变量
-        let imgFile;
-        //为文件读取成功设置事件
-        reader.onload = e => {
-            imgFile = e.target.result;
-            this.setState({
-                imgHasSelected: true,
-                file: file
-            }, () => {
-                this.refs.avatar.src = imgFile;
-            })
-        };
-        reader.onerror = e => {
-            message.error("图片读取失败");
-            this.setState({
-                imgHasSelected: false
-            })
+        if(file) {
+            const reader = new FileReader();
+            //创建文件读取相关的变量
+            let imgFile;
+            //为文件读取成功设置事件
+            reader.onload = e => {
+                imgFile = e.target.result;
+                this.setState({
+                    imgHasSelected: true,
+                    file,
+                    imgUrl: null
+                }, () => {
+                    this.refs.avatar.src = imgFile;
+                })
+            };
+            reader.onerror = e => {
+                message.error("图片读取失败");
+                this.setState({
+                    imgHasSelected: false
+                })
+            }
+            //读取文件
+            reader.readAsDataURL(file);
         }
-        //读取文件
-        reader.readAsDataURL(file);
+        else {
+            if(this.state.file) {
+                this.setState({
+                    imgUrl: null
+                })
+            }
+            else {
+                this.setState({
+                    imgUrl: this.props.food.imgUrl, 
+                    file: null
+                })
+            }
+        }
     }
     validateForm() {
         let flag = true;
@@ -119,15 +137,7 @@ export default class AddModal extends Component {
         return flag;
     }
     submit() {
-        // if(!this.state.name) {
-        //     message.warning("请输入食物名");
-        //     return;
-        // }
-        // if(!this.state.rate) {
-        //     message.warning("请选择健康等级");
-        //     return;
-        // }
-        if(!this.state.file) {
+        if(!this.state.file && !this.state.imgUrl) {
             message.warning("请上传图片");
             return;
         }
@@ -141,6 +151,7 @@ export default class AddModal extends Component {
         }
         let formData = new FormData();
         formData.append("imgUrl", this.state.file);
+        formData.append("categoryId", this.state.categoryId);
         formData.append("name", this.state.name);
         formData.append("token", userInfo.token);
         formData.append("kcal", this.state.kcal);
@@ -168,9 +179,31 @@ export default class AddModal extends Component {
         formData.append("SE", this.state.SE);
         formData.append("rate", this.state.rate);
         formData.append("remark", this.state.remark);
-        this.props.actions.addFood(formData, () => {
-            window.location.reload();
-        });
+        if(!this.props.isAdd) {
+            formData.append("foodId", this.props.food._id);
+            formData.append("oldImgUrl", this.state.imgUrl);
+            this.props.actions.editFood(formData, () => {
+                window.location.reload();
+            })
+        }
+        else {
+            this.props.actions.addFood(formData, () => {
+                window.location.reload();
+            });
+        }
+    }
+    componentWillMount() {
+        if(!this.props.isAdd) {
+            const _state = clone(this.state);
+            this.setState(Object.assign({}, _state, this.props.food));
+        }
+    }
+    componentDidMount() {
+        !this.props.isAdd && this.setState({
+            imgHasSelected: true
+        }, () => {
+            this.refs.avatar.src = this.state.imgUrl
+        })
     }
     render() {
         const food = {}
@@ -178,21 +211,14 @@ export default class AddModal extends Component {
             <div className = "food-add" >
                 <div className = "food-title flex justify-space-between align-center" >
                     <div className = "flex" >
-                        {
-                            this.state.imgHasSelected ? 
-                            (
-                                <div className = "img-upload" >
-                                    <img ref = "avatar" />
-                                </div>
-                            ) : (
-                                <div className = "img-upload">
-                                    <div className = "a-upload" >
-                                        <input ref = "file" type = "file" accept = ".png,.jpg" onChange = {() => this.selectImg()} />
-                                        <Icon type="plus" />
-                                    </div>
-                                </div>
-                            )
-                        }
+                        <div className = "img-upload">
+                            <div className = "a-upload" >
+                                <input ref = "file" type = "file" accept = ".png,.jpg" onChange = {() => this.selectImg()} />
+                                {
+                                    this.state.imgHasSelected ? <img ref = "avatar" /> :  <Icon type="plus" />
+                                }
+                            </div>
+                        </div>
                         <div style = {{marginLeft: 20}} >
                             <div>
                                 <span className = "food-name" >食物名：</span>

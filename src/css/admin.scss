@@ -3,7 +3,7 @@
 .center {
     .header {
         height: 60px;
-        background-color: $main-color;
+        background-color: #85c761;
         padding: 0 40px;
         h2 {
             color: white;
@@ -26,7 +26,60 @@
         table {
             td, th {
                 text-align: center;
+                padding: 10px;
+                font-size: 14px;
+                button {
+                    width: 28px;
+                    height: 28px;
+                }
+                button:nth-child(1) {
+                    color: white;
+                    background-color: #1890ff;
+                    border-color: #1890ff;
+                }
+                button:nth-child(2) {
+                    color: white;
+                    background-color: #e6a23c;
+                    border-color: #e6a23c;
+                }
+                button:nth-child(3) {
+                    color: white;
+                    background-color: #ff4f4f;
+                    border-color: #ff4f4f;
+                }
             }
+            th {
+                font-weight: bold;
+            }
+            tr:hover>td {
+                background-color: transparent;
+            }
+            tr:nth-child(2n) {
+                background-color: #fafafa;
+            }
+        }
+        .search-con {
+            margin-top: 40px;
+            button {
+                background-color: $main-color;
+                border-color: $main-color;
+            }
+        }
+        .lists {
+            margin-top: 40px;
+        }
+        .lists+button {
+            float: right;
+            margin-top: 25px;
+            border-color: $main-color;
+            color: $main-color;
+        }
+        .lists+button:hover {
+            background-color: $main-color   ;
+            color: white;
+        } 
+        h2 {
+            text-align: center;
         }
     }
 }

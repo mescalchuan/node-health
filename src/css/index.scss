@@ -1,4 +1,4 @@
-$main-color: #ff4f4f;
+$main-color: #69bd3c;
 $minor-color: #333333;
 $line-color: #eeeeee;
 
@@ -47,4 +47,8 @@ $flex-direction: (row, column);
 
 p, h1, h2 {
     margin: 0;
+}
+
+.flex-1 {
+    @include prefix(flex, 1);
 }

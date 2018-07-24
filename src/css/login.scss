@@ -2,15 +2,18 @@
 .login {
     background-color: $main-color;
     height: 100vh;
+    .login-img {
+        background: url(../img/bk.jpg);
+        background-size: cover;
+    }
     .login-con {
-        width: 500px;
+        width: 450px;
         background-color: white;
         padding: 50px;
         text-align: center;
-        @include prefix(border-radius, 10px);
         p {
             font-size: 25px;
-            color: #333333;
+            color: $minor-color;
             font-weight: bold;
         }
         input {

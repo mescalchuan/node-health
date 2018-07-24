@@ -9,3 +9,5 @@ export const LOGOUT = "logout";
 export const GET_CATEGORY = "getCategory";
 export const SEARCH_FOODS = "searchFoods";
 export const ADD_FOOD = "addFood";
+export const EDIT_FOOD = "editFood";
+export const DELETE_FOOD = "deleteFood";

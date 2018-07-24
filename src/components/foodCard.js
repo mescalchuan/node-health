@@ -5,7 +5,7 @@ import "../css/food.scss";
 
 const getRateColor = (rate) => {
     switch(rate) {
-        case 3: return "green";
+        case 3: return "#53cd0f";
         case 2: return "#fabd14";
         case 1: return "red"
     }
@@ -39,8 +39,8 @@ const columns1 = [{
 
 const columns2 = [{
     title: "镁",
-    dataIndex: "MA",
-    key: "MA"
+    dataIndex: "MG",
+    key: "MG"
 }, {
     title: "钙",
     dataIndex: "CA",
@@ -92,7 +92,11 @@ export default ({food}) => {
                         <p className = "kcal" >{food.kcal}千卡 / 100克</p>
                     </div>
                 </div>
-                <Rate value = {food.rate} count = {3} disabled style = {{color: getRateColor(food.rate)}} />
+                <div>
+                    <Rate value = {food.rate} count = {3} disabled style = {{color: getRateColor(food.rate)}} />
+                    <Divider/>
+                    <p className = "categoryName" >{food.categoryName}</p>
+                </div>
             </div>
             <div className = "basic flex justify-space-around" >
                 <p style = {{width:"33.33%"}} >蛋白质：{nutrientDisplay(food.protein)} 克</p>

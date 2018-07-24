@@ -27,7 +27,7 @@ export function getCategory(successBK, errorBK) {
 
 export function searchFoods(params, successBK, errorBK) {
     return (dispatch, getState) => {
-        return postData(url.SERVER_BASE + url.SEARCH_FOODS).then(res => {
+        return postData(url.SERVER_BASE + url.SEARCH_FOODS, params).then(res => {
             if(res.retCode == 0) {
                 dispatch(action.searchFoods(res.retInfo));
                 successBK && successBK(res.retInfo);

@@ -32,12 +32,15 @@ class Login extends Component {
     }
     render() {
         return (
-            <div className = "login flex flex-column justify-center align-center" >
-                <div className = "login-con">
-                    <p>Node Healthy</p>
-                    <Input placeholder = "管理员账号" onChange = {(e) => this.inputChange(0, e)} value = {this.state.userName} />
-                    <Input placeholder = "管理员密码" onChange = {(e) => this.inputChange(1, e)} value = {this.state.password} />
-                    <Button onClick = {() => this.login()}>登录</Button>
+            <div className = "login flex" >
+                <div className = "flex-1 login-img"></div>
+                <div className = "flex flex-1 justify-center align-center" style = {{backgroundColor: "white"}} >
+                    <div className = "login-con flex flex-column">
+                        <p>Node Healthy</p>
+                        <Input placeholder = "管理员账号" onChange = {(e) => this.inputChange(0, e)} value = {this.state.userName} />
+                        <Input placeholder = "管理员密码" onChange = {(e) => this.inputChange(1, e)} value = {this.state.password} />
+                        <Button onClick = {() => this.login()}>登录</Button>
+                    </div>
                 </div>
             </div>
         )

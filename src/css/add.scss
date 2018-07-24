@@ -8,7 +8,7 @@
             @include prefix(border-radius, 50px);
         }
         .food-name, .kcal {
-            color: #333333;  
+            color: $minor-color;  
         }
         .food-name, .food-name-input {
             font-size: 15px;
@@ -42,6 +42,12 @@
     button {
         margin: 0 auto;
         width: 100%;
+        background-color: $main-color;
+        border-color: $main-color;
+    }
+    button:active, button:focus {
+        background-color: $main-color;
+        border-color: $main-color;
     }
     .ant-input-number {
         margin-top: 3px;
@@ -52,7 +58,6 @@
     }
     .img-upload {
         .a-upload {
-			padding: 4px 10px;
 			height: 20px;
 			line-height: 20px;
 			position: relative;
@@ -63,7 +68,6 @@
 			border-radius: 4px;
 			overflow: hidden;
             display: inline-block;
-            
             width: 80px;
             height: 80px;
 		}
@@ -97,6 +101,7 @@
         img {
             width: 80px;
             height: 80px;
+            @include prefix(border-radius, 0);
         }
     }
 }

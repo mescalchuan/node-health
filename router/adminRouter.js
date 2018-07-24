@@ -11,7 +11,15 @@ router.post("/logout", (req, res) => {
 })
 
 router.post("/addFood", (req, res) => {
-    adminCtrl.addFood(req, res);
+    adminCtrl.foodHandler.addFood(req, res);
+})
+
+router.post("/editFood", (req, res) => {
+    adminCtrl.foodHandler.editFood(req, res);
+})
+
+router.post("/deleteFood", (req, res) => {
+    adminCtrl.foodHandler.deleteFood(req, res);
 })
 
 module.exports = router;

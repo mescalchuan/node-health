@@ -1,9 +1,9 @@
 const login = require("./login");
 const logout = require("./logout");
-const addFood = require("./addFood");
+const foodHandler = require("./foodHandler");
 
 module.exports = {
     login,
     logout,
-    addFood
+    foodHandler
 }
