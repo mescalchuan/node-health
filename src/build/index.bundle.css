@@ -161,10 +161,47 @@ p, h1, h2 {
   .user .body .ant-divider {
     margin: 32px 0;
     font-size: 20px; }
-  .user .body .star-list, .user .body category-recommon {
+  .user .body .star-con {
+    margin-top: -38px; }
+    .user .body .star-con .star-list {
+      margin-top: 70px; }
+      .user .body .star-con .star-list .star-title {
+        font-size: 16px;
+        color: #333333;
+        font-weight: bold; }
+      .user .body .star-con .star-list .star-kcal {
+        font-size: 15px;
+        color: #666666;
+        margin-top: 10px; }
+      .user .body .star-con .star-list .star-remark {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.65);
+        margin-top: 15px; }
+      .user .body .star-con .star-list img {
+        width: 120px;
+        height: 120px;
+        -webkit-border-radius: 120px;
+        border-radius: 120px;
+        margin-left: 20px; }
+  .user .body .taboo-list, .user .body category-recommon {
     -webkit-flex-shrink: 0;
     flex-shrink: 0; }
   .user .body .category-recommon {
     margin-top: -32px; }
+    .user .body .category-recommon .category {
+      width: 100%;
+      font-size: 15px;
+      color: #333333; }
+      .user .body .category-recommon .category i {
+        font-size: 35px;
+        margin-bottom: 5px; }
+
+.user .footer {
+  margin-top: 50px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  color: #333333;
+  background-color: #eeeeee; }
 
 /*# sourceMappingURL=index.bundle.css.map*/

@@ -16,18 +16,18 @@ export const getRateColor = (rate) => {
 
 export const getIconByCName = (cname) => {
     switch(cname) {
-        case "主食": return "zhushi";
-        case "肉蛋": return "rou";
-        case "大豆制品": return "dadou";
-        case "蔬菜": return "shucai";
-        case "水果": return "shuiguo";
-        case "奶制品": return "niunai";
-        case "油脂": return "youzhi";
-        case "坚果": return "jianguo";
-        case "调味品": return "tiaoweipin";
-        case "饮料": return "yinliao";
-        case "零食": return "lingshi";
-        case "其他": return "qita";
-        default: return "zhushi";
+        case "主食": return {name: "zhushi", color: "yellow"};
+        case "肉蛋": return {name: "rou", color: "#ff4f4f"};
+        case "大豆制品": return {name: "dadou", color: "yellow"};
+        case "蔬菜": return {name: "shucai", color: "green"};
+        case "水果": return {name: "shuiguo", color: "red"};
+        case "奶制品": return {name: "niunai", color: "gray"};
+        case "油脂": return {name: "youzhi", color: "orange"};
+        case "坚果": return {name: "jianguo", color: "yellow"};
+        case "调味品": return {name: "tiaoweipin", color: "blue"};
+        case "饮料": return {name: "yinliao", color: "#ff4f4f"};
+        case "零食": return {name: "lingshi", color: "blue"};
+        case "其他": return {name: "qita", color: "gray"};
+        default: return {name: "zhushi", color: "yellow"};
     }
 }

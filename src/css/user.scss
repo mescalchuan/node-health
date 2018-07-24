@@ -36,11 +36,56 @@
             margin: 32px 0;
             font-size: 20px;
         }
-        .star-list, category-recommon {
+        .star-con {
+            margin-top: -38px;
+            .star-list {
+                margin-top: 70px;
+                .star-title {
+                    font-size: 16px;
+                    color: $minor-color;
+                    font-weight: bold;
+                }
+                .star-kcal {
+                    font-size: 15px;
+                    color: #666666;
+                    margin-top: 10px;
+                }
+                .star-remark {
+                    font-size: 14px;
+                    color: rgba(0,0,0,.65);
+                    margin-top: 15px;
+                }
+                img {
+                    width: 120px;
+                    height: 120px;
+                    @include prefix(border-radius, 120px);
+                    margin-left: 20px;
+                }
+            }
+        }
+        .taboo-list, category-recommon {
             @include prefix(flex-shrink, 0);
         }
         .category-recommon {
             margin-top: -32px;
+            .category {
+                width: 100%;
+                font-size: 15px;
+                color: $minor-color;
+                i {
+                    font-size: 35px;
+                    margin-bottom: 5px;
+                }
+            }
         }
+    }
+
+    .footer {
+        margin-top: 50px;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        color: $minor-color;
+        background-color: #eeeeee;
     }
 }
