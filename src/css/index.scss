@@ -23,6 +23,10 @@ $flex-direction: (row, column);
     border: none;
 }
 
+%pointer {
+    cursor: pointer;
+}
+
 @each $justify in $justify-config {
     .justify-#{$justify} {
         @include prefix(justify-content, $justify);

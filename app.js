@@ -53,6 +53,7 @@ app.get("/", (req, res) => {
 mongoose.connect("mongodb://localhost/db", function(err, db) {
     if(err) {
         console.log("连接失败");
+        process.exit(1);
     }
     else {
         console.log("连接成功")

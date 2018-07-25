@@ -65,34 +65,49 @@ p, h1, h2 {
   -webkit-flex: 1;
   flex: 1; }
 
-.login {
-  height: 100vh; }
-  .login .login-img {
-    background: url(bk.jpg);
-    background-size: cover; }
-  .login .login-con {
-    width: 450px;
-    background-color: white;
-    padding: 50px;
-    text-align: center; }
-    .login .login-con p {
-      font-size: 25px;
-      color: #333333;
-      font-weight: bold; }
-    .login .login-con input {
-      height: 35px;
-      margin-top: 30px; }
-    .login .login-con button {
-      width: 100%;
-      height: 40;
-      margin-top: 30px;
-      border-color: #69bd3c;
-      color: #69bd3c; }
-    .login .login-con button:hover {
-      background-color: #69bd3c;
-      color: white; }
-    .login .login-con input:hover {
-      border-color: #69bd3c; }
+.food-con .food-title img {
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px; }
+
+.food-con .food-title .food-name, .food-con .food-title .kcal {
+  color: #333333; }
+
+.food-con .food-title .food-name {
+  font-size: 15px; }
+
+.food-con .food-title .kcal {
+  font-size: 16px; }
+
+.food-con .food-title .categoryName {
+  font-size: 15px;
+  color: minor-color;
+  text-align: center; }
+
+.food-con .food-title .ant-divider {
+  margin: 10px 0; }
+
+.food-con .basic {
+  margin-top: 20px; }
+
+.food-con table {
+  border: 0 !important; }
+  .food-con table th {
+    font-size: 13px;
+    text-align: center;
+    padding: 10px;
+    background-color: transparent; }
+  .food-con table th:nth-last-child(1), .food-con table td:nth-last-child(1) {
+    border-right: 0; }
+  .food-con table td {
+    font-size: 13px;
+    text-align: center;
+    border-bottom: 0;
+    padding: 5px; }
+
+.food-con .nutrient-first table td {
+  border-bottom: 1px solid #e8e8e8; }
 .flex {
   display: flex;
   display: -webkit-flex; }
@@ -160,49 +175,34 @@ p, h1, h2 {
   -webkit-flex: 1;
   flex: 1; }
 
-.food-con .food-title img {
-  width: 50px;
-  height: 50px;
-  -webkit-border-radius: 50px;
-  border-radius: 50px; }
-
-.food-con .food-title .food-name, .food-con .food-title .kcal {
-  color: #333333; }
-
-.food-con .food-title .food-name {
-  font-size: 15px; }
-
-.food-con .food-title .kcal {
-  font-size: 16px; }
-
-.food-con .food-title .categoryName {
-  font-size: 15px;
-  color: minor-color;
-  text-align: center; }
-
-.food-con .food-title .ant-divider {
-  margin: 10px 0; }
-
-.food-con .basic {
-  margin-top: 20px; }
-
-.food-con table {
-  border: 0 !important; }
-  .food-con table th {
-    font-size: 13px;
-    text-align: center;
-    padding: 10px;
-    background-color: transparent; }
-  .food-con table th:nth-last-child(1), .food-con table td:nth-last-child(1) {
-    border-right: 0; }
-  .food-con table td {
-    font-size: 13px;
-    text-align: center;
-    border-bottom: 0;
-    padding: 5px; }
-
-.food-con .nutrient-first table td {
-  border-bottom: 1px solid #e8e8e8; }
+.login {
+  height: 100vh; }
+  .login .login-img {
+    background: url(bk.jpg);
+    background-size: cover; }
+  .login .login-con {
+    width: 450px;
+    background-color: white;
+    padding: 50px;
+    text-align: center; }
+    .login .login-con p {
+      font-size: 25px;
+      color: #333333;
+      font-weight: bold; }
+    .login .login-con input {
+      height: 35px;
+      margin-top: 30px; }
+    .login .login-con button {
+      width: 100%;
+      height: 40;
+      margin-top: 30px;
+      border-color: #69bd3c;
+      color: #69bd3c; }
+    .login .login-con button:hover {
+      background-color: #69bd3c;
+      color: white; }
+    .login .login-con input:hover {
+      border-color: #69bd3c; }
 .flex {
   display: flex;
   display: -webkit-flex; }

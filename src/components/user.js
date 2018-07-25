@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import * as server from "../server/userServer";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { Carousel, Input, Divider, Card, Rate, Row, Col } from "antd";
+import { Carousel, Input, Divider, Card, Rate, Row, Col, Modal } from "antd";
+import FoodCard from "./foodCard";
 import "../css/index.scss";
 import "../css/user.scss";
 import food from "../testData";
@@ -17,7 +18,10 @@ class User extends Component {
         super(props);
         this.state = {
             starList: [food, food, food, food],
-            tabooList: [food, food, food, food, food]
+            tabooList: [food, food, food, food, food],
+            cIndex: null,
+            food: {},
+            cardVisible: false
         }
     }
     renderStarList(list) {
@@ -29,12 +33,12 @@ class User extends Component {
                             <Col span = {12} key = {index} >
                                 <Row>
                                     <Col span = {18} >
-                                        <p className = "star-title" >{this.state.starList[0].name}</p>
-                                        <p className = "star-kcal" >热量：{this.state.starList[0].kcal} KJ/100g</p>
-                                        <p className = "star-remark" >{this.state.starList[0].remark}</p>
+                                        <p className = "star-title" >{item.name}</p>
+                                        <p className = "star-kcal" >热量：{item.kcal} KJ/100g</p>
+                                        <p className = "star-remark" >{item.remark}</p>
                                     </Col>
                                     <Col span = {6}>
-                                        <img src = {this.state.starList[0].imgUrl} />
+                                        <img src = {item.imgUrl} onClick = {() => this.changeCardVisible(item)} />
                                     </Col>
                                 </Row>
                             </Col>
@@ -45,12 +49,35 @@ class User extends Component {
         )
         
     }
+    categoryHover(index) {
+        const cIndex = this.state.cIndex == null ? index : null;
+        this.setState({
+            cIndex
+        })
+    }
+    changeCardVisible(food) {
+        if(food.name) {
+            this.setState({
+                cardVisible: !this.state.cardVisible,
+                food
+            })
+        }
+        else {
+            this.setState({
+                cardVisible: !this.state.cardVisible
+            }, () => {
+                this.setState({
+                    food
+                })
+            })
+        }
+    }
     componentDidMount() {
         // this.props.actions.getBannerList(() => {
         //     console.log("succeed");
         // })
         this.props.actions.getCategory(() => {
-            console.log(this.props.category)
+            
         });
     }
     render() {
@@ -75,8 +102,8 @@ class User extends Component {
                         {
                             this.props.category.map((item, index) => (
                                 <div key = {index} >
-                                    <Card style = {{width: 150, margin: 32}} >
-                                        <div className = "category flex flex-column align-center" >
+                                    <Card style = {{width: 150, margin: 32, borderColor: this.state.cIndex != null ? this.state.cIndex == index ? getIconByCName(item.name).color : "#eeeeee" : "#eeeeee"}} >
+                                        <div className = "category flex flex-column align-center" onMouseOver = {() => this.categoryHover(index)} onMouseOut = {() => this.categoryHover(index)} >
                                             <i className = {`icon iconfont icon-${getIconByCName(item.name).name}`} style = {{color: getIconByCName(item.name).color}} ></i>
                                             {item.name}
                                         </div>
@@ -94,19 +121,20 @@ class User extends Component {
                     <div className = "taboo-list flex justify-space-between flex-wrap" >
                         {
                             this.state.tabooList.map((item, index) => (
-                                <Card
-                                    hoverable
-                                    style = {{ width: 240 }}
-                                    cover = {<img alt="example" src={item.imgUrl} />}
-                                    key = {index}
-                                >
-                                    <Meta
-                                        title = {item.name + " ( " + item.kcal + "KJ/100g )"}
-                                        description = {
-                                            <Rate count = {3} defaultValue = {item.rate} disabled color = {getRateColor(item.rate)} />
-                                        }
-                                    />
-                                </Card>
+                                <div onClick = {() => this.changeCardVisible(item)} key = {index} >
+                                    <Card
+                                        hoverable
+                                        style = {{ width: 240 }}
+                                        cover = {<img alt="example" src={item.imgUrl} />}
+                                    >
+                                        <Meta
+                                            title = {item.name + " ( " + item.kcal + "KJ/100g )"}
+                                            description = {
+                                                <Rate count = {3} defaultValue = {item.rate} disabled color = {getRateColor(item.rate)} />
+                                            }
+                                        />
+                                    </Card>
+                                </div>
                             ))
                         }
                     </div>
@@ -114,6 +142,9 @@ class User extends Component {
                 <div className = "footer">
                     Copyright © Mescal Chuan
                 </div>
+                <Modal title = "食物详情" visible = {this.state.cardVisible} footer = {null} onCancel = {() => this.changeCardVisible({})} >
+                    <FoodCard food = {this.state.food} />
+                </Modal>
             </div>
         )
     }

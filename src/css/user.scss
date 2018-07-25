@@ -59,6 +59,7 @@
                     width: 120px;
                     height: 120px;
                     @include prefix(border-radius, 120px);
+                    @extend %pointer;
                     margin-left: 20px;
                 }
             }
@@ -76,6 +77,7 @@
                     font-size: 35px;
                     margin-bottom: 5px;
                 }
+                @extend %pointer;
             }
         }
     }
