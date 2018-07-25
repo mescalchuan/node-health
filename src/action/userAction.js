@@ -27,3 +27,11 @@ export function setSearchInfo(searchInfo) {
         searchInfo
     }
 }
+
+export function getHomeList(moduleType, foods) {
+    return {
+        type: types.GET_HOME_LIST,
+        moduleType,
+        foods
+    }
+}

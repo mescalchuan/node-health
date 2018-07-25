@@ -35,3 +35,14 @@ export function setSearchInfo(keyword, categoryId, callback) {
         }, 0);
     }
 }
+
+export function getHomeList(params, moduleType, successBK, errorBK) {
+    return (dispatch, getState) => {
+        return postData(url.SERVER_BASE + url.SEARCH_FOODS, params).then(res => {
+            if(res.retCode == 0) {
+                dispatch(action.getHomeList(moduleType, res.retInfo));
+                successBK && successBK(res.retInfo);
+            }
+        })
+    }
+}

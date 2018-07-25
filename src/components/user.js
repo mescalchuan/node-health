@@ -9,6 +9,7 @@ import "../css/index.scss";
 import "../css/user.scss";
 import food from "../testData";
 import { getRateColor, getIconByCName } from "../common/utils";
+import * as configs from "../config/static";
 
 const Search = Input.Search;
 const { Meta } = Card;
@@ -21,8 +22,21 @@ class User extends Component {
             tabooList: [food, food, food, food, food],
             cIndex: null,
             food: {},
-            cardVisible: false
+            cardVisible: false,
+            additional: []
         }
+    }
+    listLeft(listLength) {
+        const columns = Math.floor((document.body.clientWidth - 60) / 240);
+        const lastColCount = listLength % columns;
+        const additionCount = lastColCount == 0 ? 0 : columns - lastColCount;
+        let arr = [];
+        for(let index = 0; index < additionCount; index ++) {
+            arr[index] = index;
+        }
+        this.setState({
+            additional: arr
+        })
     }
     renderStarList(list) {
         return (
@@ -77,6 +91,14 @@ class User extends Component {
             this.props.history.push("/search");
         })
     }
+    getStarList() {
+        this.props.actions.getHomeList({sortKey: "kcal", sortType: configs.ASC}, configs.STAR_LIST);
+    }
+    getTabooList() {
+        this.props.actions.getHomeList({sortKey: "kcal", sortType: configs.DESC}, configs.TABOO_LIST, () => {
+            this.listLeft(this.props.tabooList.length);
+        });
+    }
     componentDidMount() {
         // this.props.actions.getBannerList(() => {
         //     console.log("succeed");
@@ -84,10 +106,15 @@ class User extends Component {
         this.props.actions.getCategory(() => {
             
         });
+        this.getStarList();
+        this.getTabooList();
+        window.addEventListener("resize", () => {
+            this.listLeft(this.props.tabooList.length);
+        })
     }
     render() {
-        const fontStarList = this.state.starList.slice(0, 2);
-        const endStarList = this.state.starList.slice(2);
+        const fontStarList = this.props.starList.slice(0, 2);
+        const endStarList = this.props.starList.slice(2);
         return (
             <div className = "user" >
                 <Carousel autoplay>
@@ -130,7 +157,7 @@ class User extends Component {
                     <Divider>禁忌</Divider> 
                     <div className = "taboo-list flex justify-space-between flex-wrap" >
                         {
-                            this.state.tabooList.map((item, index) => (
+                            this.props.tabooList.map((item, index) => (
                                 <div onClick = {() => this.changeCardVisible(item)} key = {index} >
                                     <Card
                                         hoverable
@@ -155,6 +182,11 @@ class User extends Component {
                                 </div>
                             ))
                         }
+                        {
+                            this.state.additional.map((item, index) => (
+                                <div style = {{width: 240, height: 351}} key = {index} ></div>
+                            ))
+                        }
                     </div>
                 </div>
                 <div className = "footer">
@@ -176,7 +208,9 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
     category: state.userReducer.category,
     keyword: state.userReducer.keyword,
-    categoryId: state.userReducer.categoryId
+    categoryId: state.userReducer.categoryId,
+    starList: state.userReducer.starList,
+    tabooList: state.userReducer.tabooList
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);
