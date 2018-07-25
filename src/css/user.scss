@@ -80,6 +80,14 @@
                 @extend %pointer;
             }
         }
+        .taboo-list {
+            .ant-card-cover {
+                img {
+                    width: 238px;
+                    height: 238px;
+                }
+            }
+        }
     }
 
     .footer {

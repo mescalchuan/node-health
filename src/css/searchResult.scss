@@ -1,0 +1,40 @@
+@import "./index.scss";
+
+.search-result {
+    padding: 50px 120px;
+    .header {
+        .ant-input {
+            width: 400px;
+        }    
+        button:nth-child(1) {
+            color: white;
+            background-color: #ff4f4f;
+            border-color: #ff4f4f;
+        }
+        button:nth-child(1):hover {
+            background-color: #ff7474;
+            border-color: #ff7474;
+        }
+    }
+    .body {
+        @include prefix(flex-shrink, 0);
+        .ant-card-cover {
+            img {
+                width: 198px;
+                height: 198px;
+            }
+        }
+        .food-con {
+            //240 332
+            width: 200px;
+            height: 311px;
+            margin-top: 50px;
+        }
+    }
+    .empty {
+        width: 398px;
+        height: auto;
+        display: block;
+        margin: 50px auto 0 auto;
+    }
+}

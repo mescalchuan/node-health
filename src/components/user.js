@@ -72,6 +72,11 @@ class User extends Component {
             })
         }
     }
+    searchFoods(keyword, categoryId) {
+        this.props.actions.setSearchInfo(keyword, categoryId, () => {
+            this.props.history.push("/search");
+        })
+    }
     componentDidMount() {
         // this.props.actions.getBannerList(() => {
         //     console.log("succeed");
@@ -91,7 +96,7 @@ class User extends Component {
                         <div className = "search-con" >
                             <Search
                                 placeholder = "请输入食物名"
-                                onSearch = {value => console.log(value)}
+                                onSearch = {value => this.searchFoods(value, "")}
                             />
                         </div>
                     </div>
@@ -103,7 +108,12 @@ class User extends Component {
                             this.props.category.map((item, index) => (
                                 <div key = {index} >
                                     <Card style = {{width: 150, margin: 32, borderColor: this.state.cIndex != null ? this.state.cIndex == index ? getIconByCName(item.name).color : "#eeeeee" : "#eeeeee"}} >
-                                        <div className = "category flex flex-column align-center" onMouseOver = {() => this.categoryHover(index)} onMouseOut = {() => this.categoryHover(index)} >
+                                        <div 
+                                            className = "category flex flex-column align-center" 
+                                            onMouseOver = {() => this.categoryHover(index)} 
+                                            onMouseOut = {() => this.categoryHover(index)}
+                                            onClick = {() => this.searchFoods("", item._id)}
+                                        >
                                             <i className = {`icon iconfont icon-${getIconByCName(item.name).name}`} style = {{color: getIconByCName(item.name).color}} ></i>
                                             {item.name}
                                         </div>
@@ -128,9 +138,17 @@ class User extends Component {
                                         cover = {<img alt="example" src={item.imgUrl} />}
                                     >
                                         <Meta
-                                            title = {item.name + " ( " + item.kcal + "KJ/100g )"}
+                                            title = {
+                                                <div className = "flex justify-space-between" >
+                                                    <p>{item.name}</p>
+                                                    <Rate count = {3} defaultValue = {item.rate} disabled style = {{color: getRateColor(item.rate)}} />
+                                                </div>
+                                            }
                                             description = {
-                                                <Rate count = {3} defaultValue = {item.rate} disabled color = {getRateColor(item.rate)} />
+                                                <div>
+                                                    <p>热量 -- {item.kcal + " KJ/100g"}</p>
+                                                    <p style = {{fontSize: 12}} >脂肪 -- {item.fat + " g/100g"}</p>
+                                                </div>
                                             }
                                         />
                                     </Card>
@@ -156,7 +174,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-	category: state.userReducer.category
+    category: state.userReducer.category,
+    keyword: state.userReducer.keyword,
+    categoryId: state.userReducer.categoryId
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);

@@ -20,3 +20,10 @@ export function searchFoods(foods) {
         foods
     }
 }
+
+export function setSearchInfo(searchInfo) {
+    return {
+        type: types.SET_SEARCH_INFO,
+        searchInfo
+    }
+}
