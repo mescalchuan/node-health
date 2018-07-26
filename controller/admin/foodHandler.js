@@ -1,17 +1,18 @@
-const multiparty = require('multiparty');
-const jwt = require('jsonwebtoken');
-const qiniu = require('qiniu');
-const request = require('request');
+const multiparty = require("multiparty");
+const jwt = require("jsonwebtoken");
+const qiniu = require("qiniu");
+const request = require("request");
 const models = require("../../model/index");
 
 const domain = "http://ox6gixp8f.bkt.clouddn.com/";
-const accessKey = 'qVavZs09FHGxYJdaC-1ZDQeqJVbJQAbyOPnBGu5g';
-const secretKey = 'I4Y4lXRbZz4zL7t2llASK5Lg8Eo5zKEna_uTCPfe';
+const accessKey = "qVavZs09FHGxYJdaC-1ZDQeqJVbJQAbyOPnBGu5g";
+const secretKey = "I4Y4lXRbZz4zL7t2llASK5Lg8Eo5zKEna_uTCPfe";
 
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 const bucket = "sunnychuan";
 const options = {
     scope: bucket,
+    expires: 7200
 };
 const putPolicy = new qiniu.rs.PutPolicy(options);
 const uploadToken = putPolicy.uploadToken(mac);

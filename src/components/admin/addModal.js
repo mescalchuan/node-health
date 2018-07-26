@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Icon, message, Rate, Divider, Table, Input, Row, Col, InputNumber, Button, Select } from 'antd';
-import {clone} from "../../common/utils";
+import { Icon, message, Rate, Divider, Table, Input, Row, Col, InputNumber, Button, Select } from "antd";
+import { clone } from "../../common/utils";
 import "../../css/add.scss";
 
 const { TextArea } = Input;
@@ -325,7 +325,7 @@ export default class AddModal extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span = {6} >纳</Col>
+                        <Col span = {6} >钠</Col>
                         <Col span = {6} >硒</Col>
                     </Row>
                     <Row>

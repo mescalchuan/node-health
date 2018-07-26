@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import { Divider, Rate, Table } from 'antd';
+import React, { Component } from "react";
+import { Divider, Rate, Table } from "antd";
 import { nutrientDisplay, getRateColor } from "../common/utils";
 import "../css/food.scss";
 

@@ -29,11 +29,11 @@ const userReducer = (state = defaultState, action) => {
             switch(action.moduleType) {
                 case configs.STAR_LIST: 
                     return Object.assign({}, state, {
-                        starList: action.foods
+                        starList: action.foods.slice(0, 4)
                     })
                 case configs.TABOO_LIST: 
                     return Object.assign({}, state, {
-                        tabooList: action.foods
+                        tabooList: action.foods.slice(0, 5)
                     })
                 default: return state;
             }

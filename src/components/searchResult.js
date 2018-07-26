@@ -1,9 +1,9 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import * as server from "../server/userServer";
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import { Input, Rate, Modal, Select, Button, Card, message } from "antd";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { Input, Rate, Modal, Select, Button, Card, message, BackTop } from "antd";
 import FoodCard from "./foodCard";
 import "../css/index.scss";
 import "../css/searchResult.scss";
@@ -78,7 +78,7 @@ class SearchResult extends Component {
         return (
             <div className = "search-result" >
                 <div className = "header flex justify-center" >
-                    <Button type  ="danger" icon = "left" onClick = {() => this.props.history.goBack()} ></Button>
+                    <Button icon = "left" onClick = {() => this.props.history.goBack()} ></Button>
                     <Input 
                         placeholder = "请输入食物名" 
                         value = {this.state.keyword} 
@@ -123,13 +123,14 @@ class SearchResult extends Component {
                     }
                 </div>
                 {
-                    this.props.foods.length ? <Modal title = "食物详情" visible = {this.state.cardVisible} footer = {null} onCancel = {() => this.changeCardVisible(this.state.currentIndex)} >
+                    this.props.foods.length ? <Modal title = "食物详情" visible = {this.state.cardVisible} footer = {null} maskClosable = {false} onCancel = {() => this.changeCardVisible(this.state.currentIndex)} >
                         <FoodCard food = {food} />
                     </Modal> : null
                 }
                 {
                     !this.props.foods.length ? <img className = "empty" src = "../img/empty.jpg" /> : null
                 }
+                <BackTop />
             </div>
         )
     }

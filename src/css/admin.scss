@@ -60,24 +60,21 @@
         }
         .search-con {
             margin-top: 40px;
-            button {
-                background-color: $main-color;
-                border-color: $main-color;
+            span {
+                button {
+                    background-color: $main-color;
+                    border-color: $main-color;
+                }
+                button:nth-child(2) {
+                    margin-left: 20px;
+                    color: $main-color;
+                }
             }
+            
         }
         .lists {
             margin-top: 40px;
         }
-        .lists+button {
-            float: right;
-            margin-top: 25px;
-            border-color: $main-color;
-            color: $main-color;
-        }
-        .lists+button:hover {
-            background-color: $main-color   ;
-            color: white;
-        } 
         h2 {
             text-align: center;
         }

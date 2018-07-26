@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Input, Button } from 'antd';
+import { Input, Button } from "antd";
 import * as server from "../../server/adminServer";
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import "../../css/login.scss";
 
 class Login extends Component {

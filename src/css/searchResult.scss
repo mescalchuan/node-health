@@ -6,15 +6,6 @@
         .ant-input {
             width: 400px;
         }    
-        button:nth-child(1) {
-            color: white;
-            background-color: #ff4f4f;
-            border-color: #ff4f4f;
-        }
-        button:nth-child(1):hover {
-            background-color: #ff7474;
-            border-color: #ff7474;
-        }
     }
     .body {
         @include prefix(flex-shrink, 0);

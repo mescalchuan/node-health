@@ -40,7 +40,7 @@ export default {
                 failCallback && failCallback(e);
                 console.log(JSON.stringify(e))
                 console.log(JSON.stringify(request.responseText))
-                console.warn('get error');
+                console.warn("get error");
             }
         };
         
@@ -51,7 +51,7 @@ export default {
         
         request.timeout = timeout;
         //request.withCredentials = true;
-        request.open('GET', newUrl);
+        request.open("GET", newUrl);
         request.send();
     },
 
@@ -90,10 +90,6 @@ export default {
             if (request.status === 200) {
                 try {
                     const res = JSON.parse(request.responseText);
-                     if (url.indexOf('orderGateway/buy_order/') >= 0) {
-                         console.log(request.getResponseHeader("Date"))
-                        res.serverTime = request.getResponseHeader('Date');
-                    }
                     successCallback && successCallback(res);
                 } 
                 catch(e) {
@@ -106,7 +102,7 @@ export default {
                 failCallback && failCallback(e);
                 console.log(JSON.stringify(e))
                 console.log(JSON.stringify(request.responseText))
-                console.warn('post error');
+                console.warn("post error");
             }
         };
 
@@ -117,13 +113,13 @@ export default {
         
         request.timeout = timeout;
         
-        request.open('POST', url);
+        request.open("POST", url);
         if(needJSON) {
             request.setRequestHeader("Content-Type", "application/json");
             newData = JSON.stringify(data);
         }
         else if(!!!(~url.indexOf("admin/add")) && !!!(~url.indexOf("admin/edit"))) {
-            request.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+            request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         }
         else {
            // request.setRequestHeader("Content-Type", "multipart/form-data");

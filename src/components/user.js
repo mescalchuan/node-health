@@ -1,8 +1,8 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import * as server from "../server/userServer";
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import { Carousel, Input, Divider, Card, Rate, Row, Col, Modal } from "antd";
 import FoodCard from "./foodCard";
 import "../css/index.scss";
@@ -192,7 +192,7 @@ class User extends Component {
                 <div className = "footer">
                     Copyright © Mescal Chuan
                 </div>
-                <Modal title = "食物详情" visible = {this.state.cardVisible} footer = {null} onCancel = {() => this.changeCardVisible({})} >
+                <Modal title = "食物详情" visible = {this.state.cardVisible} footer = {null} maskClosable = {false} onCancel = {() => this.changeCardVisible({})} >
                     <FoodCard food = {this.state.food} />
                 </Modal>
             </div>

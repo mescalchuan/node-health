@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import * as server from "../../server/adminServer";
 import * as userServer from "../../server/userServer";
-import {getData, postData} from "../../common/fetch";
-import { Avatar, Input, Select, Button, Table, Modal, Icon } from 'antd';
+import { getData, postData } from "../../common/fetch";
+import { Avatar, Input, Select, Button, Table, Modal, Icon, BackTop } from "antd";
 import FoodCard from "../foodCard";
 import AddModal from "../admin/addModal";
 import "../../css/admin.scss";
@@ -20,7 +20,7 @@ class AdminCenter extends Component {
     constructor(props) {
         super(props);
         this.columns = [{
-            title: "名字",
+            title: "食物名",
             dataIndex: "name",
             key: "name"
         }, {
@@ -152,23 +152,25 @@ class AdminCenter extends Component {
                             <Option value="">食物分类</Option>
                             {this.renderCategory()}
                         </Select>
-                        <Button type="primary" icon="search" onClick = {() => this.searchFoods()} >搜索</Button>
+                        <span>
+                            <Button type="primary" icon="search" onClick = {() => this.searchFoods()} >搜索</Button>
+                            <Button ghost onClick = {() => this.setState({currentType: type.ADD, addVisible: true})} >添加</Button>
+                        </span>
                     </div>
 
                     <div className = "lists" >
                         <Table dataSource = {this.props.foods} columns = {this.columns} bordered pagination = {false} />
                     </div>
-
-                    <Button onClick = {() => this.setState({currentType: type.ADD, addVisible: true})} >添加</Button>
                     {
-                        this.props.foods.length ? <Modal title = "食物详情" visible = {this.state.cardVisible} footer = {null} onCancel = {() => this.changeCardVisible(this.state.currentIndex)} >
+                        this.props.foods.length ? <Modal title = "食物详情" visible = {this.state.cardVisible} footer = {null} maskClosable = {false} onCancel = {() => this.changeCardVisible(this.state.currentIndex)} >
                             <FoodCard food = {food} />
                         </Modal> : null
                     }
-                    <Modal title = {isAdd ? "添加" : "修改"} visible = {this.state.addVisible} footer = {null} onCancel = {() => this.changeAddVisible()} destroyOnClose >
+                    <Modal title = {isAdd ? "添加" : "修改"} visible = {this.state.addVisible} footer = {null} maskClosable = {false} onCancel = {() => this.changeAddVisible()} destroyOnClose >
                         <AddModal category = {this.props.category} actions = {this.props.actions} isAdd = {isAdd} food = {isAdd ? {} : food} />
                     </Modal>
                 </div>
+                <BackTop />
             </div>
         )
     }

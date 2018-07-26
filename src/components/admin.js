@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Login from "./admin/login";
 import AdminCenter from "./admin/center";

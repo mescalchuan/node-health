@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const webpack = require("webpack");
 const webpackConfig = require("./webpack.config");
 const cookieParser = require("cookie-parser");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const session = require("express-session");
 const router = require("./router/index");
 const interceptor = require("./controller/interceptorCtrl");
@@ -37,10 +37,10 @@ app.use((req, res, next) => {
     interceptor(req, res, next);
 })
 //app.use(multipart({uploadDir:'/upload' }));//设置上传文件存放的地址
-app.use('/api', router.foodRouter);
-app.use('/api/admin', router.adminRouter);
+app.use("/api", router.foodRouter);
+app.use("/api/admin", router.adminRouter);
 
-app.use(express.static('src'));
+app.use(express.static("src"));
 app.use(express.static(__dirname));
 app.get("/", (req, res) => {
     return res.render("index", {
