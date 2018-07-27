@@ -12,7 +12,6 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.urlencoded({ type: "multipart/form-data" }));
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -36,7 +35,7 @@ app.set("view engine", "ejs");
 app.use((req, res, next) => {
     interceptor(req, res, next);
 })
-//app.use(multipart({uploadDir:'/upload' }));//设置上传文件存放的地址
+
 app.use("/api", router.foodRouter);
 app.use("/api/admin", router.adminRouter);
 

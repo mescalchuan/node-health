@@ -12,7 +12,8 @@ export function getCategory(successBK, errorBK) {
             else {
                 errorBK && errorBK(res);
             }
-        })
+        }, e => console.log(e))
+        .catch(e => console.log(e))
     }
 }
 
@@ -23,7 +24,11 @@ export function searchFoods(params, successBK, errorBK) {
                 dispatch(action.searchFoods(res.retInfo));
                 successBK && successBK(res.retInfo);
             }
-        })
+            else {
+                errorBK && errorBK(res)
+            }
+        }, e => console.log(e))
+        .catch(e => console.log(e))
     }
 }
 
@@ -43,6 +48,10 @@ export function getHomeList(params, moduleType, successBK, errorBK) {
                 dispatch(action.getHomeList(moduleType, res.retInfo));
                 successBK && successBK(res.retInfo);
             }
-        })
+            else {
+                errorBK && errorBK(res)
+            }
+        }, e => console.log(e))
+        .catch(e => console.log(e))
     }
 }

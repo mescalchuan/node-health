@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import * as server from "../../server/adminServer";
 import * as userServer from "../../server/userServer";
 import { getData, postData } from "../../common/fetch";
-import { Avatar, Input, Select, Button, Table, Modal, Icon, BackTop } from "antd";
+import { Avatar, Input, Select, Button, Table, Modal, Icon, BackTop, message } from "antd";
 import FoodCard from "../foodCard";
 import AddModal from "../admin/addModal";
 import "../../css/admin.scss";
@@ -69,11 +69,11 @@ class AdminCenter extends Component {
         this.props.actions.logout(() => {
             window.location.reload();
         }, res => {
-            alert(res.retMsg);
+            message.error(res.retMsg);
         })
     }
     componentDidMount() {
-        this.props.userActions.getCategory();
+        this.props.userActions.getCategory(null, res => message.error(res.retMsg));
         this.searchFoods();
     }
     renderCategory() {
@@ -98,7 +98,7 @@ class AdminCenter extends Component {
         const foodId = this.props.foods[currentIndex]._id;
         this.props.actions.deleteFood(foodId, () => {
             window.location.reload();
-        });
+        }, res => message.error(res.retMsg));
     }
     changeAddVisible() {
         this.setState({
@@ -123,7 +123,7 @@ class AdminCenter extends Component {
     }
     searchFoods() {
         const {keyword, categoryId} = this.state.searchInfo;
-        this.props.userActions.searchFoods({keyword, categoryId});
+        this.props.userActions.searchFoods({keyword, categoryId}, res => message.error(res.retMsg));
     }
     render() {
         const isAdd = this.state.currentType == type.ADD;

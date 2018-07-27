@@ -188,11 +188,15 @@ export default class AddModal extends Component {
             formData.append("oldImgUrl", this.state.imgUrl);
             this.props.actions.editFood(formData, () => {
                 window.location.reload();
+            }, res => {
+                message.error(res.retMsg)
             })
         }
         else {
             this.props.actions.addFood(formData, () => {
                 window.location.reload();
+            }, res => {
+                message.error(res.retMsg)
             });
         }
     }

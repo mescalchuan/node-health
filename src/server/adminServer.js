@@ -10,7 +10,8 @@ export function login(params, successBK, errorBK) {
             else {
                 errorBK && errorBK(res);
             }
-        })
+        }, e => console.log(e))
+        .catch(e => console.log(e))
     }
 }
 
@@ -23,7 +24,8 @@ export function logout(successBK, errorBK) {
             else {
                 errorBK && errorBK(res);
             }
-        })
+        }, e => console.log(e))
+        .catch(e => console.log(e))
     }
 }
 
@@ -36,7 +38,8 @@ export function addFood(params, successBK, errorBK) {
             else {
                 errorBK && errorBK(res);
             }
-        })
+        }, e => console.log(e))
+        .catch(e => console.log(e))
     }
 }
 
@@ -49,7 +52,8 @@ export function editFood(params, successBK, errorBK) {
             else {
                 errorBK && errorBK(res);
             }
-        })
+        }, e => console.log(e))
+        .catch(e => console.log(e))
     }
 }
 
@@ -62,6 +66,7 @@ export function deleteFood(foodId, successBK, errorBK) {
             else {
                 errorBK && errorBK(res);
             }
-        })
+        }, e => console.log(e))
+        .catch(e => console.log(e))
     }
 }

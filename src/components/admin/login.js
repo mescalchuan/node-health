@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Button } from "antd";
+import { Input, Button, message } from "antd";
 import * as server from "../../server/adminServer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -27,7 +27,7 @@ class Login extends Component {
         }, () => {
             window.location.reload();
         }, res => {
-            alert(res.retMsg);
+            message.error(res.retMsg);
         });
     }
     render() {

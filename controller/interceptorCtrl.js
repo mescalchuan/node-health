@@ -32,7 +32,7 @@ const interceptor = module.exports = (req, res, next) => {
         else {
             token = req.body.token;
         }
-        jwt.verify(token, 'node-health', function (err, decoded) {
+        jwt.verify(token, "node-health", function (err, decoded) {
             if (!err) {
                 if(decoded.name !== "token") {
                     return res.json({

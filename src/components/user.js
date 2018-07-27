@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import * as server from "../server/userServer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { Carousel, Input, Divider, Card, Rate, Row, Col, Modal } from "antd";
+import { Carousel, Input, Divider, Card, Rate, Row, Col, Modal, message } from "antd";
 import FoodCard from "./foodCard";
 import "../css/index.scss";
 import "../css/user.scss";
-import food from "../testData";
 import { getRateColor, getIconByCName } from "../common/utils";
 import * as configs from "../config/static";
 
@@ -18,8 +16,6 @@ class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            starList: [food, food, food, food],
-            tabooList: [food, food, food, food, food],
             cIndex: null,
             food: {},
             cardVisible: false,
@@ -89,23 +85,21 @@ class User extends Component {
     searchFoods(keyword, categoryId) {
         this.props.actions.setSearchInfo(keyword, categoryId, () => {
             this.props.history.push("/search");
-        })
+        }, res => message.error(res.retMsg))
     }
     getStarList() {
-        this.props.actions.getHomeList({sortKey: "kcal", sortType: configs.ASC}, configs.STAR_LIST);
+        this.props.actions.getHomeList({sortKey: "kcal", sortType: configs.ASC}, configs.STAR_LIST, null, res => message.error(res.retMsg));
     }
     getTabooList() {
         this.props.actions.getHomeList({sortKey: "kcal", sortType: configs.DESC}, configs.TABOO_LIST, () => {
             this.listLeft(this.props.tabooList.length);
-        });
+        }, res => message.error(res.retMsg));
     }
     componentDidMount() {
         // this.props.actions.getBannerList(() => {
         //     console.log("succeed");
         // })
-        this.props.actions.getCategory(() => {
-            
-        });
+        this.props.actions.getCategory(null, res => message.error(res.retMsg));
         this.getStarList();
         this.getTabooList();
         window.addEventListener("resize", () => {

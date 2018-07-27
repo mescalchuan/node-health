@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import * as server from "../server/userServer";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -56,7 +55,7 @@ class SearchResult extends Component {
         this.props.actions.searchFoods({keyword, categoryId}, () => {
             !this.props.foods.length && message.warning("未搜到食物");
             successBK && successBK();
-        });
+        }, res => message.error(res.retMsg));
     }
     componentWillMount() {
         this.setState({
@@ -65,7 +64,7 @@ class SearchResult extends Component {
         })
     }
     componentDidMount() {
-        this.props.actions.getCategory();
+        this.props.actions.getCategory(null, res => message.error(res.retMsg));
         this.searchFoods(() => {
             this.listLeft(this.props.foods.length);
         });

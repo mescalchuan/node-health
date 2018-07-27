@@ -36,7 +36,6 @@ export default {
                 }
             } 
             else {
-                console.log(request.status)
                 failCallback && failCallback(e);
                 console.log(JSON.stringify(e))
                 console.log(JSON.stringify(request.responseText))
@@ -50,7 +49,6 @@ export default {
         }
         
         request.timeout = timeout;
-        //request.withCredentials = true;
         request.open("GET", newUrl);
         request.send();
     },
@@ -98,7 +96,6 @@ export default {
                 }
             } 
             else {
-                console.log(request.status)
                 failCallback && failCallback(e);
                 console.log(JSON.stringify(e))
                 console.log(JSON.stringify(request.responseText))
@@ -120,9 +117,6 @@ export default {
         }
         else if(!!!(~url.indexOf("admin/add")) && !!!(~url.indexOf("admin/edit"))) {
             request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        }
-        else {
-           // request.setRequestHeader("Content-Type", "multipart/form-data");
         }
         request.send(newData);
     }
