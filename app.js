@@ -1,7 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const webpack = require("webpack");
-const webpackConfig = require("./webpack.config");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -17,14 +15,6 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
-
-// const compiler = webpack(webpackConfig, (err, status) => {
-//     if(err) {
-//         console.log(err);
-//     }
-// })
-//  app.use(require("webpack-dev-middleware")(compiler, webpackConfig.devServer));
-// app.use(require("webpack-hot-middleware")(compiler));
 
 //设置存放模板文件的目录
 app.set("views", __dirname);
@@ -49,7 +39,7 @@ app.get("/", (req, res) => {
     })
 })
 
-mongoose.connect("mongodb://localhost/db", function(err, db) {
+mongoose.connect("mongodb://localhost/db", (err, db) => {
     if(err) {
         console.log("连接失败");
         process.exit(1);

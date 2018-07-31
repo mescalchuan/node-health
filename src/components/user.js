@@ -96,9 +96,6 @@ class User extends Component {
         }, res => message.error(res.retMsg));
     }
     componentDidMount() {
-        // this.props.actions.getBannerList(() => {
-        //     console.log("succeed");
-        // })
         this.props.actions.getCategory(null, res => message.error(res.retMsg));
         this.getStarList();
         this.getTabooList();

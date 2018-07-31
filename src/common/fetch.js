@@ -1,6 +1,6 @@
 import ajax from "./ajax";
 
-export function getData(url, params) {
+export const getData = (url, params) => {
     return new Promise((resolve, reject) => {
         ajax.gets(url, params, res => {
             resolve(res);
@@ -10,7 +10,7 @@ export function getData(url, params) {
     })
 }
 
-export function postData(url, params, needJSON) {
+export const postData = (url, params, needJSON) => {
     return new Promise((resolve, reject) => {
         ajax.posts(url, params, res => {
             resolve(res);

@@ -106,8 +106,8 @@ class SearchResult extends Component {
                                         }
                                         description = {
                                         <div>
-                                                <p>热量 -- {item.kcal + " KJ/100g"}</p>
-                                                <p style = {{fontSize: 12}} >脂肪 -- {item.fat + " g/100g"}</p>
+                                            <p>热量 -- {item.kcal + " KJ/100g"}</p>
+                                            <p style = {{fontSize: 12}} >脂肪 -- {item.fat + " g/100g"}</p>
                                         </div>
                                         }
                                     />

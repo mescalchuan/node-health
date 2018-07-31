@@ -4,7 +4,6 @@ var webpack = require("webpack");
 var OpenBrowserPlugin = require("open-browser-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
-
 //提高loader的解析速度
 var HappyPack = require("happypack");
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
@@ -12,15 +11,12 @@ var NoEmitOnErrorsPlugin = webpack.NoEmitOnErrorsPlugin;
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 //externals配置的对象在生产环境下会自动引入CDN的对象，不会将node_modules下的文件打包进来
-//在开发环境下，会自动将node_modules里的文件打包
 var externals = {
-    //import angular(value) from 'angular'(key)
     "React": "react",
     "ReactDOM": "react-dom"
 }
-
+//配置多入口文件，包括用户和管理员
 var entry = {
-    //vendor: [],
     "index": "./src/index.js",
     "admin": "./src/admin.js"
 };
@@ -91,6 +87,7 @@ var webpackConfig = {
         new ExtractTextPlugin("[name].bundle.css", {
             allChunks: false
         }),
+        //为了方便调试，可以屏蔽
         new UglifyJsPlugin({
             minimize: true,
             output: {
@@ -99,7 +96,7 @@ var webpackConfig = {
             },
             compress: {
                 warnings: false,
-                //drop_console: true,
+                drop_console: true,
                 collapse_vars: true,
                 reduce_vars: true
             }

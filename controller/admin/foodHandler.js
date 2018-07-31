@@ -1,7 +1,6 @@
 const multiparty = require("multiparty");
 const jwt = require("jsonwebtoken");
 const qiniu = require("qiniu");
-const request = require("request");
 const models = require("../../model/index");
 
 const domain = "http://ox6gixp8f.bkt.clouddn.com/";
@@ -55,9 +54,9 @@ const createFoodObj = fields => ({
 
 const addFood = (req, res) => {
     const form = new multiparty.Form();
-    form.parse(req, function (err, fields, files) {
+    form.parse(req, (err, fields, files) => {
         const token = fields.token[0];
-        jwt.verify(token, "node-health", function (err, decoded) {
+        jwt.verify(token, "node-health", (err, decoded) => {
             if (!err) {
                 if(decoded.name !== "token") {
                     res.json({
@@ -70,7 +69,7 @@ const addFood = (req, res) => {
                 const temp = file.path.split("\\");
                 const key = temp[temp.length - 1]//'test.mp4';
                 // 文件上传
-                formUploader.putFile(uploadToken, key, localFile, putExtra, function(respErr, respBody, respInfo) {
+                formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr, respBody, respInfo) => {
                     if (respErr) {
                         throw respErr;
                         res.json({
@@ -117,10 +116,10 @@ const addFood = (req, res) => {
 
 const editFood = (req, res) => {
     const form = new multiparty.Form();
-    form.parse(req, function (err, fields, files) {
+    form.parse(req, (err, fields, files) => {
         const token = fields.token[0];
         const _id = fields.foodId[0];
-        jwt.verify(token, "node-health", function (err, decoded) {
+        jwt.verify(token, "node-health", (err, decoded) => {
             if (!err) {
                 if(decoded.name !== "token") {
                     res.json({
@@ -131,11 +130,11 @@ const editFood = (req, res) => {
                 let updateObj = createFoodObj(fields);
                 if(files.imgUrl) {
                     const file = files.imgUrl[0];
-                    const localFile = file.path//"/Users/jemy/Documents/qiniu.mp4";
+                    const localFile = file.path;
                     const temp = file.path.split("\\");
-                    const key = temp[temp.length - 1]//'test.mp4';
+                    const key = temp[temp.length - 1]//'xxx.jpg';
                     //文件上传
-                    formUploader.putFile(uploadToken, key, localFile, putExtra, function(respErr, respBody, respInfo) {
+                    formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr, respBody, respInfo) => {
                         if (respErr) {
                             throw respErr;
                             res.json({
@@ -207,7 +206,7 @@ const deleteFood = (req, res) => {
         }
         const imgUrl = result.imgUrl;
         const key = imgUrl.split(domain)[1];
-        bucketManager.delete(bucket, key, function(err, respBody, respInfo) {
+        bucketManager.delete(bucket, key, (err, respBody, respInfo) => {
             if (err) {
                 console.log(err);
                 res.json({

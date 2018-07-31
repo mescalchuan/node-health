@@ -1,4 +1,3 @@
-## node-health
 利用业余时间，自己做了一个食物热量参考网站，数据参考自一个app`食物库`。技术栈使用了`sass`+`react`+`react-router`+`redux`+`antd`+`express`+`mongoose`。
 ![node-health](https://upload-images.jianshu.io/upload_images/1495096-ffa2512a13209649.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -632,4 +631,3 @@ formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr, respBody, 
 本项目从功能上来说只是简单的`CRUD`，但用到的技术比较多，也是为了给自己做一个整体技术栈的实战，后期还可以考虑添加分页和排序功能。
 
 如果你觉得对你有帮助，欢迎`star`~，如果有任何疑问或bug，也欢迎提供`issue`。
-

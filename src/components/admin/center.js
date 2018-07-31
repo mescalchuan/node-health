@@ -123,7 +123,7 @@ class AdminCenter extends Component {
     }
     searchFoods() {
         const {keyword, categoryId} = this.state.searchInfo;
-        this.props.userActions.searchFoods({keyword, categoryId}, res => message.error(res.retMsg));
+        this.props.userActions.searchFoods({keyword, categoryId}, null, res => message.error(res.retMsg));
     }
     render() {
         const isAdd = this.state.currentType == type.ADD;
