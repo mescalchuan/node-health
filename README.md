@@ -203,7 +203,7 @@ module.exports = webpackConfig;
 之后，使用`webpack --watch`既可以完成打包。
 
 #### 后端
-后端基于`express`和`mongoose`，用到了`express-session`、`body-parser`和`cookie-parser`，所以我们先把这些包安装好：
+后端基于`express`和`mongoose`，用到了`express-session`和`body-parser，所以我们先把这些包安装好：
 ```
 npm i express mongoose body-Parser -S
 ```
