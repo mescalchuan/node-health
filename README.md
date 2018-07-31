@@ -260,6 +260,8 @@ app.listen("8888", () => {
 运行`node app`：
 ![](https://upload-images.jianshu.io/upload_images/1495096-aaec7a6377726802.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+我们还可以使用`supervisor`实现代码更新功能，只需要`npm i supervisor -g`然后用`supervisor app`代替`node app`即可。每次代码有了变更都会自动帮你重启服务器。
+
 #### 环境搭建结束
 
 到此步为止，环境搭建已经结束，项目也可以成功跑起来了，只不过没有任何内容，剩下的就是一步一步写业务。
