@@ -205,7 +205,7 @@ module.exports = webpackConfig;
 #### 后端
 后端基于`express`和`mongoose`，用到了`express-session`和`body-parser，所以我们先把这些包安装好：
 ```
-npm i express mongoose body-Parser -S
+npm i express mongoose express-session body-parser -S
 ```
 
 然后我们看一下`app.js`：
