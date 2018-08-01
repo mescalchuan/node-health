@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as server from "../../server/adminServer";
-import * as userServer from "../../server/userServer";
 import { getData, postData } from "../../common/fetch";
 import { Avatar, Input, Select, Button, Table, Modal, Icon, BackTop, message } from "antd";
 import FoodCard from "../foodCard";
@@ -73,7 +72,7 @@ class AdminCenter extends Component {
         })
     }
     componentDidMount() {
-        this.props.userActions.getCategory(null, res => message.error(res.retMsg));
+        this.props.actions.getCategory(null, res => message.error(res.retMsg));
         this.searchFoods();
     }
     renderCategory() {
@@ -123,7 +122,7 @@ class AdminCenter extends Component {
     }
     searchFoods() {
         const {keyword, categoryId} = this.state.searchInfo;
-        this.props.userActions.searchFoods({keyword, categoryId}, null, res => message.error(res.retMsg));
+        this.props.actions.searchFoods({keyword, categoryId}, null, res => message.error(res.retMsg));
     }
     render() {
         const isAdd = this.state.currentType == type.ADD;
@@ -179,8 +178,7 @@ class AdminCenter extends Component {
 
 // 将actions绑定到props上
 const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(server, dispatch),
-    userActions: bindActionCreators(userServer, dispatch)
+    actions: bindActionCreators(server, dispatch)
 });
 
 const mapStateToProps = (state) => ({

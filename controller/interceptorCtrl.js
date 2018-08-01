@@ -26,7 +26,8 @@ const interceptor = module.exports = (req, res, next) => {
     }
     else if(!!(~url.indexOf("/api/admin")) && !!!(~url.indexOf("/login")) && !!!(~url.indexOf("/addFood")) && !!!(~url.indexOf("/editFood"))) {
         let token = "";
-        if(JSON.stringify(req.body) === "{}") {
+        const method = req.method.toLowerCase();
+        if(method == "get") {
             token = req.query.token;
         }
         else {
