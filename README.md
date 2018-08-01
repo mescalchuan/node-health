@@ -489,9 +489,9 @@ export default adminReducer;
 ##### app.js
 ```
 ...
-const foodRouter = require("./router/foodRouter");
+const adminRouter = require("./router/adminRouter");
 
-app.use("/api", foodRouter);
+app.use("/api/admin", adminRouter);
 ...
 ```
 
