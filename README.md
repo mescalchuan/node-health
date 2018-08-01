@@ -359,7 +359,8 @@ const interceptor = module.exports = (req, res, next) => {
     //如果是ajax请求并且请求接口来自管理员，那么校验请求参数中的token是否正确，不正确的话则直接返回retCode 500
     else if(!!(~url.indexOf("/api/admin"))) {
         let token = "";
-        if(JSON.stringify(req.body) === "{}") {
+        const method = req.method.toLowerCase();
+        if(method == "get") {
             token = req.query.token;
         }
         else {
@@ -400,17 +401,14 @@ const interceptor = module.exports = (req, res, next) => {
 
 组件在`componentDidMount`阶段发起`server`的请求 --> 等待后端返回数据 --> 发起`action` --> `reducer`中保存数据 --> 更新视图
 
-由于用户和管理员都需要获取分类列表，因此我将分类的`server`和`action`都划分到了用户模块。
-
 ##### src/components/admin/center.js
 ```
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as server from "../../server/adminServer";
-import * as userServer from "../../server/userServer";
 ...
 componentDidMount() {
-    this.props.userActions.getCategory({token: userInfo.token}, null, res => message.error(res.retMsg));
+    this.props.actions.getCategory({token: userInfo.token}, null, res => message.error(res.retMsg));
 }
 render() {
     return (
@@ -424,25 +422,24 @@ render() {
 ...
 // 将actions绑定到props上
 const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(server, dispatch),
-    userActions: bindActionCreators(userServer, dispatch)
+    actions: bindActionCreators(server, dispatch)
 });
 //将state绑定到props上
 const mapStateToProps = (state) => ({
-    foods: state.adminReducer.foods
+    category: state.adminReducer.category
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminCenter);
 ```
 
-##### src/server/userServer.js
+##### src/server/adminServer.js
 这里使用到了`redux-thunk`。
 ```
 ...
 import * as action from "../action/userAction";
 export function getCategory(successBK, errorBK) {
     return (dispatch, getState) => {
-        return getData(url.SERVER_BASE + url.GET_CATEGORY).then(res => {
+        return getData(url.SERVER_ADMIN + url.GET_CATEGORY).then(res => {
             if(res.retCode == 0) {
                 dispatch(action.getCategory(res.retInfo));
                 successBK && successBK(res.retInfo);
@@ -498,7 +495,7 @@ app.use("/api", foodRouter);
 ...
 ```
 
-##### router/foodRouter.js
+##### router/adminRouter.js
 ```
 const express = require("express");
 const category= require("../controller/user/category");
