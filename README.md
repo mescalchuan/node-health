@@ -536,7 +536,7 @@ module.exports = {
 ![](https://upload-images.jianshu.io/upload_images/1495096-7d39ad4d5ba42568.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 六、图片上传
-管理员添加和修改食物信息时需要上传图片。如果只是练习的话，可以将图片保存到项目中并将图片绝对路径保存到数据库中。但是，我们来个更加贴切真实项目的吧，将图片保存到图片服务器中~
+管理员添加和修改食物信息时需要上传图片。如果只是练习的话，可以将图片保存到本地并将图片绝对路径保存到数据库中。但是，我们来个更加贴切真实项目的吧，将图片保存到图片服务器中~
 
 我们将图片保存到`七牛云`存储系统中，你需要先注册个账号，官网地址在[这里](https://www.qiniu.com/)。
 
@@ -581,7 +581,7 @@ const addFood = (req, res) => {
 #### 上传到七牛云
 我们需要使用到七牛云的`node sdk`，`npm i qiniu -S`。使用文档请访问[Node.js SDK](https://developer.qiniu.com/kodo/sdk/1289/nodejs)。
 
-我们首先先要做一些配置：
+我们首先要做一些配置：
 ```
 //七牛云图片域名
 const domain = "http://ox6gixp8f.bkt.clouddn.com/";
@@ -624,7 +624,7 @@ formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr, respBody, 
 })
 ```
 
-我们可以从七牛云上看到已经上传的图片：
+我们可以在七牛云上看到已经上传的图片：
 ![](https://upload-images.jianshu.io/upload_images/1495096-fe9e12a4ba7b95c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
