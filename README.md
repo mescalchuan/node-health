@@ -7,7 +7,7 @@
 #### 下载
 首先将代码clone到本地
 ```
-git clone https://github.com/1335382915/node-health.git
+git clone https://github.com/mescalchuan/node-health.git
 ```
 #### 安装依赖包
 ```
