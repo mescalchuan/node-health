@@ -65,9 +65,9 @@ const addFood = (req, res) => {
                 const key = temp[temp.length - 1]//'test.mp4';
                 // 文件上传
 
-                client.put(key, localFile).then((respBody, reject) => {
+                client.put('/' + key, localFile).then((respBody, reject) => {
                     if (reject) {
-                       
+
                         res.json({
                             retCode: -1,
                             retMsg: "ali yun upload erro"
@@ -136,7 +136,7 @@ const editFood = (req, res) => {
                     //文件上传
                     client.put(key, localFile).then((respBody, reject) => {
                         if (reject) {
-                           
+
                             res.json({
                                 retCode: -1,
                                 retMsg: "ali yun upload erro"
@@ -218,8 +218,8 @@ const deleteFood = (req, res) => {
                     retMsg: "ali yun delete error"
                 })
                 //throw err;
-            } 
-            if (respBody.res.statusCode == 200) { 
+            }
+            if (respBody.res.statusCode == 200 || respBody.res.statusCode == 204) {
                 console.log(respBody);
                 models.Food.deleteOne({_id: foodId}, (err, result) => {
                     if(err) {
