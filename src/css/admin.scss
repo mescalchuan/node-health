@@ -16,13 +16,18 @@
         a {
             margin-left: 10px;
         }
+        .ant-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
     .body {
         width: 1000px;
         margin: 50px auto;
         .ant-input-group-wrapper {
             width: 400px;
-        }    
+        }
         table {
             td, th {
                 text-align: center;
@@ -70,7 +75,7 @@
                     color: $main-color;
                 }
             }
-            
+
         }
         .lists {
             margin-top: 40px;

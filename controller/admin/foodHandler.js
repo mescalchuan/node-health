@@ -3,24 +3,16 @@ const jwt = require("jsonwebtoken");
 const qiniu = require("qiniu");
 const models = require("../../model/index");
 
-const domain = "http://ox6gixp8f.bkt.clouddn.com/";
-const accessKey = "qVavZs09FHGxYJdaC-1ZDQeqJVbJQAbyOPnBGu5g";
-const secretKey = "I4Y4lXRbZz4zL7t2llASK5Lg8Eo5zKEna_uTCPfe";
+const domain = "http://mescal-chuan.oss-cn-beijing.aliyuncs.com/";
 
-const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
-const bucket = "sunnychuan";
-const options = {
-    scope: bucket,
-    expires: 7200
-};
-const putPolicy = new qiniu.rs.PutPolicy(options);
-const uploadToken = putPolicy.uploadToken(mac);
-const config = new qiniu.conf.Config();
-// 空间对应的机房
-config.zone = qiniu.zone.Zone_z0;
-const formUploader = new qiniu.form_up.FormUploader(config);
-const bucketManager = new qiniu.rs.BucketManager(mac, config);
-const putExtra = new qiniu.form_up.PutExtra();
+const OSS = require('ali-oss');
+const client = new OSS({
+    region: 'oss-cn-beijing',
+    //云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，部署在服务端使用RAM子账号或STS，部署在客户端使用STS。
+    accessKeyId: 'LTAIa2EaQxqPMBfb',
+    accessKeySecret: 'WjKeNw8gAdU1y80SpO1JYnWfzq9Pbe',
+    bucket: 'mescal-chuan'
+  });
 
 const createFoodObj = fields => ({
     categoryId: fields.categoryId[0],
@@ -66,21 +58,26 @@ const addFood = (req, res) => {
                 }
                 const file = files.imgUrl[0];
                 const localFile = file.path//"/Users/jemy/Documents/qiniu.mp4";
-                const temp = file.path.split("\\");
+                let temp = file.path.split("\\");
+                if(temp.length <= 1) {
+                    temp = file.path.split("/")
+                }
                 const key = temp[temp.length - 1]//'test.mp4';
                 // 文件上传
-                formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr, respBody, respInfo) => {
-                    if (respErr) {
-                        throw respErr;
+
+                client.put(key, localFile).then((respBody, reject) => {
+                    if (reject) {
+                       
                         res.json({
                             retCode: -1,
-                            retMsg: "qiniu yun upload erro"
+                            retMsg: "ali yun upload erro"
                         })
+                        throw reject;
                     }
-                    if (respInfo.statusCode == 200) {
-                        console.log(respBody);
+                    console.log(respBody)
+                    if(respBody.res.statusCode == 200) {
                         let food = createFoodObj(fields);
-                        food.imgUrl = domain + respBody.key;
+                        food.imgUrl = domain + respBody.name;
                         models.Food.create(food, (err, result) => {
                             if(err) {
                                 res.json({
@@ -93,13 +90,13 @@ const addFood = (req, res) => {
                                 retInfo: {}
                             })
                         })
-                    } 
+                    }
                     else {
-                        console.log(respInfo.statusCode);
                         console.log(respBody);
+                        console.log(respBody.res.statusCode);
                         res.json({
                             retCode: -1,
-                            retMsg: "qiniu yun upload error"
+                            retMsg: "ali yun upload error"
                         })
                     }
                 });
@@ -131,20 +128,24 @@ const editFood = (req, res) => {
                 if(files.imgUrl) {
                     const file = files.imgUrl[0];
                     const localFile = file.path;
-                    const temp = file.path.split("\\");
+                    let temp = file.path.split("\\");
+                    if(temp.length <= 1) {
+                        temp = file.path.split("/")
+                    }
                     const key = temp[temp.length - 1]//'xxx.jpg';
                     //文件上传
-                    formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr, respBody, respInfo) => {
-                        if (respErr) {
-                            throw respErr;
+                    client.put(key, localFile).then((respBody, reject) => {
+                        if (reject) {
+                           
                             res.json({
                                 retCode: -1,
-                                retMsg: "qiniu yun upload error"
+                                retMsg: "ali yun upload erro"
                             })
+                            throw reject;
                         }
-                        if (respInfo.statusCode == 200) {
-                            console.log(respBody);
-                            updateObj.imgUrl = domain + respBody.key
+                        console.log(respBody)
+                        if(respBody.res.statusCode == 200) {
+                            updateObj.imgUrl = domain + respBody.name;
                             models.Food.findByIdAndUpdate(_id, updateObj, (err, result) => {
                                 if(err) {
                                     res.json({
@@ -157,16 +158,18 @@ const editFood = (req, res) => {
                                     retInfo: {}
                                 })
                             })
-                        } 
+                        }
                         else {
-                            console.log(respInfo.statusCode);
                             console.log(respBody);
+                            console.log(respBody.res.statusCode);
                             res.json({
                                 retCode: -1,
-                                retMsg: "qiniu yun upload error"
+                                retMsg: "ali yun upload error"
                             })
                         }
                     });
+
+
                 }
                 else {
                     updateObj.imgUrl = fields.oldImgUrl[0];
@@ -205,17 +208,18 @@ const deleteFood = (req, res) => {
             })
         }
         const imgUrl = result.imgUrl;
-        const key = imgUrl.split(domain)[1];
-        bucketManager.delete(bucket, key, (err, respBody, respInfo) => {
-            if (err) {
-                console.log(err);
+        const key = imgUrl.split(domain)[1]//.split('.')[0];
+        console.log(key)
+        client.delete(key).then((respBody, reject) => {
+            if (reject) {
+                console.log(reject);
                 res.json({
                     retCode: -1,
-                    retMsg: "qiniu yun delete error"
+                    retMsg: "ali yun delete error"
                 })
                 //throw err;
             } 
-            if (respInfo.statusCode == 200) { 
+            if (respBody.res.statusCode == 200) { 
                 console.log(respBody);
                 models.Food.deleteOne({_id: foodId}, (err, result) => {
                     if(err) {
@@ -231,11 +235,11 @@ const deleteFood = (req, res) => {
                 })
             }
             else {
-                console.log(respInfo.statusCode);
+                console.log(respBody.res.statusCode);
                 console.log(respBody);
                 res.json({
                     retCode: -1,
-                    retMsg: "qiniu yun delete error"
+                    retMsg: "ali yun delete error"
                 })
             }
         });
