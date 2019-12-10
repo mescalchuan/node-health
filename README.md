@@ -1,6 +1,7 @@
 ## Node-Health
 
 利用业余时间，自己做了一个食物热量参考网站，数据参考自一个app`食物库`。技术栈使用了`sass`+`react`+`react-router`+`redux`+`antd`+`express`+`mongoose`。
+
 ![node-health](https://upload-images.jianshu.io/upload_images/1495096-ffa2512a13209649.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 一、How To Use
@@ -25,6 +26,8 @@ mongoexport -d db -c category -o "E:node-health\db\category.json" --type json --
 mongoexport -d db -c food -o "E:node-health\db\food.json" --type json --port 27017
 ```
 这里推荐一个超轻量级数据库操作工具：[adminMongo](https://github.com/mrvautin/adminMongo)。
+
+
 ![adminMongo](https://upload-images.jianshu.io/upload_images/1495096-e7118805d7624887.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 如果数据导入成功，那么在`food`和`category`表里会看到导入进来的数据，否则，你需要在`adminMongo`里自己手动创建这两张表，然后再导入数据就可以了。
@@ -87,6 +90,7 @@ node app
 
 #### 前端
 目录结构如下：
+
 ![](https://upload-images.jianshu.io/upload_images/1495096-d95fff03f6252fab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 从头搭建`webpack`吧，由于用到了后台模板引擎，因此我们就不再单独用`webpack`启动一个服务了。
@@ -203,7 +207,7 @@ module.exports = webpackConfig;
 之后，使用`webpack --watch`既可以完成打包。
 
 #### 后端
-后端基于`express`和`mongoose`，用到了`express-session`和`body-parser，所以我们先把这些包安装好：
+后端基于`express`和`mongoose`，用到了`express-session`和`body-parser`，所以我们先把这些包安装好：
 ```
 npm i express mongoose express-session body-parser -S
 ```
@@ -260,6 +264,7 @@ app.listen("8888", () => {
 ```
 
 运行`node app`：
+
 ![](https://upload-images.jianshu.io/upload_images/1495096-aaec7a6377726802.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 我们还可以使用`supervisor`实现代码更新功能，只需要`npm i supervisor -g`然后用`supervisor app`代替`node app`即可。每次代码有了变更都会自动帮你重启服务器。
@@ -401,6 +406,8 @@ const interceptor = module.exports = (req, res, next) => {
 
 组件在`componentDidMount`阶段发起`server`的请求 --> 等待后端返回数据 --> 发起`action` --> `reducer`中保存数据 --> 更新视图
 
+由于用户和管理员都需要获取分类列表，因此我将分类的`server`和`action`都划分到了用户模块。
+
 ##### src/components/admin/center.js
 ```
 import { bindActionCreators } from "redux";
@@ -538,15 +545,20 @@ module.exports = {
 ### 六、图片上传
 管理员添加和修改食物信息时需要上传图片。如果只是练习的话，可以将图片保存到本地并将图片绝对路径保存到数据库中。但是，我们来个更加贴切真实项目的吧，将图片保存到图片服务器中~
 
-我们将图片保存到`七牛云`存储系统中，你需要先注册个账号，官网地址在[这里](https://www.qiniu.com/)。
+~~我们将图片保存到`七牛云`存储系统中，你需要先注册个账号，官网地址在[这里](https://www.qiniu.com/)。~~
+因`七牛云`取消了测试账号，现已将图片全部存储在`阿里云`中，官网地址在[这里](https://www.aliyun.com/?utm_content=se_1003074876)。
 
-在管理控制台 --> 对象存储 --> 内容管理中可以看到已经存储的图片：
-![](https://upload-images.jianshu.io/upload_images/1495096-624c106bf6b7671d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+~~在管理控制台 --> 对象存储 --> 内容管理中可以看到已经存储的图片：~~
+在控制台 --> 对象存储 OSS --> 文件管理中可以看到已经存储的图片：
 
-下一步要做的就是前端上传图片发送给后端，后端上传到七牛云并将图片链接保存到数据库。
+![](https://upload-images.jianshu.io/upload_images/1495096-3d5325c182b77410.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+下一步要做的就是前端上传图片发送给后端，后端上传到~~七牛云~~阿里云并将图片链接保存到数据库。
 
 #### 前端上传图片
 使用`<input type="file" />`实现图片选择。默认样式比较丑，因此我自己重写了样式：
+
 ![](https://upload-images.jianshu.io/upload_images/1495096-f78df8643831c1e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 然后要做的就是使用`formData`对象将图片信息发送给后端。
@@ -578,54 +590,52 @@ const addFood = (req, res) => {
 
 ![](https://upload-images.jianshu.io/upload_images/1495096-673e21339f1f2449.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-#### 上传到七牛云
-我们需要使用到七牛云的`node sdk`，`npm i qiniu -S`。使用文档请访问[Node.js SDK](https://developer.qiniu.com/kodo/sdk/1289/nodejs)。
+#### 上传到~~七牛云~~阿里云
+我们需要使用到七牛云的`node sdk`，~~`npm i qiniu -S`~~`npm i ali-oss`。使用文档请访问[Node.js SDK](https://help.aliyun.com/document_detail/32068.html?spm=a2c4g.11174283.6.1184.43c87da2WGJBmc)。
+
 
 我们首先要做一些配置：
 ```
-//七牛云图片域名
-const domain = "http://ox6gixp8f.bkt.clouddn.com/";
-//两个密钥，可以在七牛云的个人中心的密钥管理中找到
-const accessKey = "qVavZs09FHGxYJdaC-1ZDQeqJVbJQAbyOPnBGu5g";
-const secretKey = "I4Y4lXRbZz4zL7t2llASK5Lg8Eo5zKEna_uTCPfe";
-//定义鉴权对象mac
-const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
-//空间名，请和你的七牛云空间名保持一致
-const bucket = "sunnychuan";
-//上传的凭证
-const options = {
-    scope: bucket,
-    expires: 7200
-};
-//生成凭证
-const putPolicy = new qiniu.rs.PutPolicy(options);
-//生成token
-const uploadToken = putPolicy.uploadToken(mac);
-//初始化config
-const config = new qiniu.conf.Config();
-// 空间对应的机房
-config.zone = qiniu.zone.Zone_z0;
-//七牛云图片上传对象
-const formUploader = new qiniu.form_up.FormUploader(config);
-const putExtra = new qiniu.form_up.PutExtra();
+const domain = "http://mescal-chuan.oss-cn-beijing.aliyuncs.com/";
+
+const OSS = require('ali-oss');
+const client = new OSS({
+    region: 'oss-cn-beijing',
+    //云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，部署在服务端使用RAM子账号或STS，部署在客户端使用STS。
+    accessKeyId: 'LTAIa2EaQxqPMBfb',
+    accessKeySecret: 'WjKeNw8gAdU1y80SpO1JYnWfzq9Pbe',
+    bucket: 'mescal-chuan'
+ });
 ```
-接下来要做的就是将图片信息上传到七牛云：
+接下来要做的就是将图片信息上传到~~七牛云~~阿里云：
 ```
 const file = files.imgUrl[0];
-const localFile = file.path;
-const temp = file.path.split("\\");
-const key = temp[temp.length - 1]; //xxx.jpg
-
-formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr, respBody, respInfo) => {
-    if(respInfo.statusCode == 200) {
-        const imgUrl = domain + respBody.key;
+const localFile = file.path//"/Users/jemy/Documents/qiniu.mp4";
+let temp = file.path.split("\\");
+if(temp.length <= 1) {
+    temp = file.path.split("/")
+}
+const key = temp[temp.length - 1]//'test.mp4';
+// 文件上传
+client.put('/' + key, localFile).then((respBody, reject) => {
+    if (reject) {
+        res.json({
+            retCode: -1,
+            retMsg: "ali yun upload error"
+        })
+        throw reject;
+    }
+    if(respBody.res.statusCode == 200) {
+        const imgUrl = domain + respBody.name;
         //保存到数据库即可
     }
-})
+}
 ```
 
-我们可以在七牛云上看到已经上传的图片：
-![](https://upload-images.jianshu.io/upload_images/1495096-fe9e12a4ba7b95c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+我们可以在~~七牛云~~阿里云上看到已经上传的图片：
+
+![](https://upload-images.jianshu.io/upload_images/1495096-98942052b4438737.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 
 ### 结束语
