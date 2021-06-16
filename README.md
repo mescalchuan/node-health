@@ -49,27 +49,39 @@ node app
 
 ![node-health](https://upload-images.jianshu.io/upload_images/1495096-ffa2512a13209649.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
 ![分类](https://upload-images.jianshu.io/upload_images/1495096-f2d395dcca74ce45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 ![推荐食物](https://upload-images.jianshu.io/upload_images/1495096-b314d35f12de3cf7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
 ![高热量食物](https://upload-images.jianshu.io/upload_images/1495096-8ef8a51aea0bb38d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 ![食物详情](https://upload-images.jianshu.io/upload_images/1495096-5a308abbb2a3d4cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
 ![搜索结果页](https://upload-images.jianshu.io/upload_images/1495096-a9bf6ad837bd0be8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 ![管理员登录页](https://upload-images.jianshu.io/upload_images/1495096-45ad6317e2122e73.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
 ![后台管理页](https://upload-images.jianshu.io/upload_images/1495096-85fbba304bf1b718.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 ![添加食物](https://upload-images.jianshu.io/upload_images/1495096-6a581c610961d210.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
 ![食物详情](https://upload-images.jianshu.io/upload_images/1495096-55d878686ece6c52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 ![修改食物](https://upload-images.jianshu.io/upload_images/1495096-55117aecde6650fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
 ![删除食物](https://upload-images.jianshu.io/upload_images/1495096-4b7fe599c24563ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 ### 二、说明
 该项目适用于有一定前端基础（包括`react`和`redux`）和`node.js`基础的同学，如果你正在学习`node`，但又无法将一系列知识体系串起来，那么本项目同样适合你~
